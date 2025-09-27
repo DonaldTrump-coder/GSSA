@@ -1,0 +1,6 @@
+open3d==0.18.0
+scikit-image==0.24.0
+trimesh==4.4.3
+imageio==2.36.0
+imageio-ffmpeg==0.5.1
+py3nvml
