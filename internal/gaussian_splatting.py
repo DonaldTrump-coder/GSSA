@@ -377,7 +377,7 @@ class GaussianSplatting(LightningModule):
 
         # forward
         outputs = self(camera)
-        save_predicted_depth(outputs,batch)
+        #save_predicted_depth(outputs,batch)
         # metrics
         metrics, prog_bar = self.metric.get_train_metrics(self, self.gaussian_model, global_step, batch, outputs)
         self.log_metrics(metrics, prog_bar, prefix="train", on_step=True, on_epoch=False)

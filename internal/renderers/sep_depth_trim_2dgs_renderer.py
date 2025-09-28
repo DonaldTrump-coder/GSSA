@@ -161,11 +161,11 @@ class SepDepthTrim2DGSRenderer(Renderer):
 
         rets.update({
             'rend_alpha': render_alpha,
-            'rend_normal': render_normal,
+            'rend_normal': render_normal, # from rendering
             'view_normal': -allmap[2:5],
             'rend_dist': render_dist,
-            'surf_depth': surf_depth,
-            'surf_normal': surf_normal,
+            'surf_depth': surf_depth, # depth used in TSDF finally
+            'surf_normal': surf_normal,# from surf_depth
         })
 
         return rets

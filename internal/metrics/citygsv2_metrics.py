@@ -72,6 +72,44 @@ class CityGSV2MetricsModule(GS2DMetricsImpl):
     def _depth_ssim(self, a, b):
         from internal.utils.ssim import ssim
         return ssim(a[None], b[None])
+    
+    def compute_depth_gradient(self,depth_map: torch.Tensor) -> torch.Tensor:
+        # 计算深度图的 x 和 y 方向的梯度
+        grad_x = torch.diff(depth_map, dim=2, append=torch.zeros_like(depth_map[:, :, -1:]))  # x方向梯度
+        grad_y = torch.diff(depth_map, dim=1, append=torch.zeros_like(depth_map[:, -1:, :]))  # y方向梯度
+
+        # 可以选择计算梯度的L2范数，或是直接计算每个方向的梯度损失
+        grad_norm = torch.sqrt(grad_x ** 2 + grad_y ** 2)
+        return grad_norm
+    
+    def compute_gradient_diff_loss(self, rend_depth: torch.Tensor, surf_depth: torch.Tensor, lambda_grad: float = 1.0) -> torch.Tensor:
+        # 计算两张深度图的梯度
+        grad_rend = self.compute_depth_gradient(rend_depth)
+        grad_surf = self.compute_depth_gradient(surf_depth)
+        
+        # 计算梯度差异（L2范数）
+        grad_diff = torch.abs(grad_rend - grad_surf)  # 这里使用绝对差异，可以尝试其他的距离度量
+        
+        # 求平均梯度差异
+        grad_loss = grad_diff.mean()
+
+        # 通过 lambda_grad 调节梯度损失的权重
+        return lambda_grad * grad_loss
+    
+    def get_depth_gradient_metric(self, batch, outputs):
+        _, _, gt_inverse_depth = batch
+        predicted_inverse_depth = 1. / (outputs["surf_depth"].clamp_min(0.).squeeze() + 1e-8)
+        if self.config.depth_normalized:
+            # with torch.no_grad():
+            clamp_val = (predicted_inverse_depth.mean() + 2 * predicted_inverse_depth.std()).item()
+            predicted_inverse_depth = predicted_inverse_depth.clamp(max=clamp_val) / clamp_val
+            gt_inverse_depth = gt_inverse_depth.clamp(max=clamp_val) / clamp_val
+        if isinstance(gt_inverse_depth, tuple):
+            gt_inverse_depth, gt_inverse_depth_mask = gt_inverse_depth
+
+            gt_inverse_depth = gt_inverse_depth * gt_inverse_depth_mask
+            predicted_inverse_depth = predicted_inverse_depth * gt_inverse_depth_mask
+        return self.compute_gradient_diff_loss(predicted_inverse_depth, gt_inverse_depth)
 
     def get_inverse_depth_metric(self, batch, outputs):
         # TODO: apply mask
@@ -111,12 +149,16 @@ class CityGSV2MetricsModule(GS2DMetricsImpl):
         pbar["d_reg"] = True
         pbar["d_w"] = True
 
+        d_grad_loss = self.get_depth_gradient_metric(batch, outputs) * d_reg_weight
+        metrics["d_grad_loss"] = d_grad_loss
+        pbar["d_grad_loss"] = True
+
         if step < pl_module.hparams["density"].densify_until_iter:
             pbar["extra_loss"] = False
-            metrics["loss"] = pl_module.hparams["metric"].lambda_dssim * (1. - metrics["ssim"]) + metrics["dist_loss"] + metrics["normal_loss"] + d_reg
+            metrics["loss"] = pl_module.hparams["metric"].lambda_dssim * (1. - metrics["ssim"]) + metrics["dist_loss"] + metrics["normal_loss"] + d_reg + d_grad_loss
             metrics["extra_loss"] = (1.0 - pl_module.hparams["metric"].lambda_dssim) * metrics["rgb_diff"]
         else:
-            metrics["loss"] = metrics["loss"] + d_reg
+            metrics["loss"] = metrics["loss"] + d_reg + d_grad_loss
 
         return metrics, pbar
 
@@ -124,9 +166,14 @@ class CityGSV2MetricsModule(GS2DMetricsImpl):
         metrics, pbar = super().get_validate_metrics(pl_module, gaussian_model, batch, outputs)
 
         d_reg = self.get_inverse_depth_metric(batch, outputs)
+        d_grad_loss = self.get_depth_gradient_metric(batch, outputs)
 
         metrics["loss"] = metrics["loss"] + d_reg
         metrics["d_reg"] = d_reg
         pbar["d_reg"] = True
+
+        metrics["d_grad_loss"] = d_grad_loss
+        pbar["d_grad_loss"] = True
+        metrics["loss"] = metrics["loss"] + d_grad_loss
 
         return metrics, pbar
