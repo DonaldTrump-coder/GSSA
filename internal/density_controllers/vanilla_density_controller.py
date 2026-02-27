@@ -11,19 +11,19 @@ from .density_controller import DensityController, DensityControllerImpl, Utils
 
 @dataclass
 class VanillaDensityController(DensityController):
-    percent_dense: float = 0.01
+    percent_dense: float = 0.007
 
-    densification_interval: int = 100
+    densification_interval: int = 150
 
-    opacity_reset_interval: int = 3000
+    opacity_reset_interval: int = 33000
 
-    densify_from_iter: int = 500
+    densify_from_iter: int = 2000
 
-    densify_until_iter: int = 15_000
+    densify_until_iter: int = 18_000
 
-    densify_grad_threshold: float = 0.0002
+    densify_grad_threshold: float = 0.0001
 
-    cull_opacity_threshold: float = 0.005
+    cull_opacity_threshold: float = 0.006
     """threshold of opacity for culling gaussians."""
 
     camera_extent_factor: float = 1.
@@ -91,12 +91,14 @@ class VanillaDensityControllerImpl(DensityControllerImpl):
                     optimizers=optimizers,
                 )
 
+            """
             if global_step % self.config.opacity_reset_interval == 0 or \
                     (
                             torch.all(pl_module.background_color == 1.) and global_step == self.config.densify_from_iter
                             #背景是白色
                     ):
                 self._reset_opacities(gaussian_model, optimizers)#重置透明度
+            """
 
     def update_states(self, outputs):
         viewspace_point_tensor, visibility_filter, radii = outputs["viewspace_points"], outputs["visibility_filter"], outputs["radii"]

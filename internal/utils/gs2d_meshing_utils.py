@@ -34,7 +34,7 @@ class GS2DMeshingUtils:
             # self.normals.append(normal.cpu())
             # self.depth_normals.append(depth_normal.cpu())
 
-        return rgbmaps, depthmaps, weightmaps
+        return rgbmaps, depthmaps
 
     @classmethod
     @torch.no_grad()
@@ -347,7 +347,7 @@ def post_process_mesh(mesh, cluster_to_keep=1000):
     cluster_n_triangles = np.asarray(cluster_n_triangles)
     cluster_area = np.asarray(cluster_area)
     n_cluster = np.sort(cluster_n_triangles.copy())[-cluster_to_keep]
-    n_cluster = max(n_cluster, 50)  # filter meshes smaller than 50
+    n_cluster = max(n_cluster, 40)  # filter meshes smaller than 40
     triangles_to_remove = cluster_n_triangles[triangle_clusters] < n_cluster
     mesh_0.remove_triangles_by_mask(triangles_to_remove)
     mesh_0.remove_unreferenced_vertices()

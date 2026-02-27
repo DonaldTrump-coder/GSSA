@@ -108,8 +108,8 @@ class GaussianModelLoader:
             else:
                 model = VanillaGaussian(sh_degree=sh_degree).instantiate()
 
-        max_mask=torch.min(model_state_dict["gaussians.scales"],dim=1).values>0.1#大高斯
-        bg_mask=torch.all(torch.abs(SH2RGB(model_state_dict["gaussians.shs_dc"]))<0.1,dim=2)#黑色高斯
+        max_mask=torch.min(model_state_dict["gaussians.scales"],dim=1).values>0.5#大高斯
+        bg_mask=torch.all(SH2RGB(model_state_dict["gaussians.shs_dc"])<0.1,dim=2)#黑色高斯
         bg_mask=torch.all(bg_mask,dim=1)
         mask=~(max_mask&bg_mask)
 

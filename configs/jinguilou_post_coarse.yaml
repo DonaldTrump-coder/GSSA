@@ -20,7 +20,7 @@ model:
   density: internal.density_controllers.citygsv2_density_controller.CityGSV2DensityController
 trainer:
   check_val_every_n_epoch: 100
-  max_steps: 1
+  max_steps: 20000
 data:
   path: data/jinguilou_post
   parser:

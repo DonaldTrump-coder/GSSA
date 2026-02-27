@@ -24,7 +24,7 @@ from internal.schedulers import Scheduler, ExponentialDecayScheduler
 
 @dataclass
 class OptimizationConfig:
-    means_lr_init: float = 0.0016/10
+    means_lr_init: float = 0.0016
     # means_lr_scheduler: Scheduler = field(default_factory=lambda: ExponentialDecayScheduler(
     #     lr_final=0.0000016,
     #     max_steps=30_000,
@@ -33,21 +33,21 @@ class OptimizationConfig:
     means_lr_scheduler: Scheduler = field(default_factory=lambda: {
         "class_path": "ExponentialDecayScheduler",
         "init_args": {
-            "lr_final": 0.0000016*10,
-            "max_steps": 3_000,
+            "lr_final": 0.0000016,
+            "max_steps": 20_000,
         },
     })
     spatial_lr_scale: float = -1  # auto calculate from camera poses if <= 0
 
-    shs_dc_lr: float = 0.015
+    shs_dc_lr: float = 0.005
 
     shs_rest_lr: float = 0.01 / 20.
 
-    opacities_lr: float = 0.01
+    opacities_lr: float = 0.005
 
-    scales_lr: float = 0.01
+    scales_lr: float = 0.005
 
-    rotations_lr: float = 0.005
+    rotations_lr: float = 0.004
 
     sh_degree_up_interval: int = 1_000
 
@@ -126,7 +126,7 @@ class VanillaGaussianModel(
         from simple_knn._C import distCUDA2
         # the parameter device may be "cpu", so tensor must move to cuda before calling distCUDA2()
         #dist2 = torch.clamp_min(distCUDA2(fused_point_cloud.cuda()), 0.0000001).to(fused_point_cloud.device)
-        dist2 = 3*torch.clamp(distCUDA2(fused_point_cloud.cuda()), min=0.001,max=4).to(fused_point_cloud.device)
+        dist2 = 1.5 * torch.clamp(distCUDA2(fused_point_cloud.cuda()), min=0.0000001,max=4).to(fused_point_cloud.device)
         scales = torch.log(torch.sqrt(dist2))[..., None].repeat(1, 3)
 
         # rotations
@@ -134,7 +134,7 @@ class VanillaGaussianModel(
         #rots[:, 0] = 1#初始化时，无旋转
 
         # opacities
-        opacities = inverse_sigmoid(0.8 * torch.ones((fused_point_cloud.shape[0], 1), dtype=torch.float))
+        opacities = inverse_sigmoid(0.3 * torch.ones((fused_point_cloud.shape[0], 1), dtype=torch.float))
         #逆sigmoid计算
 
         means = nn.Parameter(fused_point_cloud.requires_grad_(True))
@@ -459,7 +459,7 @@ class VanillaGaussianModel(
 def get_rotations_from_pcd(xyz:np.ndarray):
     pcd = o3d.geometry.PointCloud()
     pcd.points=o3d.utility.Vector3dVector(xyz)
-    pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.05,max_nn=10))
+    pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.4,max_nn=8))
     #o3d.visualization.draw_geometries([pcd],point_show_normal=True)
     normal = np.asarray(pcd.normals)
 

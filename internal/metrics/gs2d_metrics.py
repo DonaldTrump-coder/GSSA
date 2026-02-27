@@ -5,10 +5,10 @@ from .vanilla_metrics import VanillaMetrics, VanillaMetricsImpl
 
 
 class GS2DMetrics(VanillaMetrics):
-    lambda_normal: float = 0.05
-    lambda_dist: float = 0.
-    normal_regularization_from_iter: int = 7000
-    dist_regularization_from_iter: int = 3000
+    lambda_normal: float = 0.1
+    lambda_dist: float = 0.1
+    normal_regularization_from_iter: int = 6000
+    dist_regularization_from_iter: int = 6000
 
     def instantiate(self, *args, **kwargs) -> MetricImpl:
         return GS2DMetricsImpl(self)
@@ -26,8 +26,8 @@ class GS2DMetricsImpl(VanillaMetricsImpl):
         rend_normal = outputs['rend_normal']
         surf_normal = outputs['surf_normal']
         normal_error = (1 - (rend_normal * surf_normal).sum(dim=0))[None]
-        normal_loss = lambda_normal * (normal_error).mean()*2
-        dist_loss = lambda_dist * (rend_dist).mean()*20
+        normal_loss = 1.5 * lambda_normal * (normal_error).mean()
+        dist_loss = lambda_dist * (rend_dist).mean()
 
         # update metrics
         metrics["loss"] = metrics["loss"] + dist_loss + normal_loss

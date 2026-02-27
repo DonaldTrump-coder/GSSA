@@ -16,7 +16,7 @@ def quaternions_to_axes(quaternions):
 
     return x_axes, y_axes, z_axes
 
-def points_on_plane(points, normals, eps=0.05):
+def points_on_plane(points, normals, eps=0.01):
     base_normal = normals[0]
     base_point = points[0]
     for index, point in enumerate(points):

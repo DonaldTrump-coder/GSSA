@@ -259,12 +259,28 @@ def gsfilter(means, opacities, scales, us, vs, normals, shs):
 
     return means, opacities, scales, us, vs, normals, shs, gaussians_in_plane
 
+def rot_filter(means, opacities, scales, rotations, shs):
+    norms = np.linalg.norm(rotations, axis=-1)
+    mask = norms > 1e-16
+    return means[mask], opacities[mask], scales[mask], rotations[mask], shs[mask]
+
+def opa_norm(opacities):
+    vmin = opacities.min()
+    vmax = opacities.max()
+    opacities = (opacities-vmin)/(vmax-vmin)
+
+    hist, bins = np.histogram(opacities, bins=2048, range = (0,1), density=True)
+    cdf = hist.cumsum()
+    cdf = cdf / cdf[-1]
+    opacities = np.interp(opacities, bins[:-1], cdf)
+    return opacities
+
 def gs_plane(means, opacities, scales, us, vs, normals, shs):
     gaussians_in_plane = []
     tree = cKDTree(means)
     dist, idx = tree.query(means, k=15)
     for i in tqdm(range(len(means)), desc="Judging Planes"):
-        if np.any(dist[i] > 1.2):
+        if np.any(dist[i] > 0.8):
             gaussians_in_plane.append(False)
         elif not points_on_plane(means[idx[i]], normals[idx[i]]):
             gaussians_in_plane.append(False)
@@ -276,7 +292,7 @@ def gs_plane(means, opacities, scales, us, vs, normals, shs):
 def gs_clean(means, opacities, scales, us, vs, normals, shs):
     gaussians_noise = []
     tree = cKDTree(means)
-    dist, idx = tree.query(means, k=10)
+    dist, idx = tree.query(means, k=5)
     for i in tqdm(range(len(means)), desc="Cleaning Gaussians"):
         if dist[i, 2]>1.0:
             gaussians_noise.append(i)
@@ -287,7 +303,7 @@ def gs_clean(means, opacities, scales, us, vs, normals, shs):
             gaussians_noise.append(i)
         #if not point_on_plane(means[i],normals[i],means[idx[i,1:6]], normals[idx[i,1:6]]):
             #gaussians_noise.append(i)
-        if opacities[i]<0.15:
+        if opacities[i]<0.01:
             gaussians_noise.append(i)
     gaussians_noise=np.array(gaussians_noise)
     means = np.delete(means, gaussians_noise, axis=0)
@@ -302,7 +318,7 @@ def gs_clean(means, opacities, scales, us, vs, normals, shs):
 def gs_fill(means, opacities, scales, us, vs, normals, shs):
     # fill holes
     tree = cKDTree(means)
-    dist, idx = tree.query(means, k=21)
+    dist, idx = tree.query(means, k=7)
     new_means = []
     new_opa = []
     new_scales = []
@@ -312,12 +328,12 @@ def gs_fill(means, opacities, scales, us, vs, normals, shs):
     new_shs = []
     add_num = 0
     for i in tqdm(range(len(means)), desc="Filling Holes"):
-        if np.any(dist[i] > 1.2):
+        if np.any(dist[i] > 0.3):
             continue
         if not points_on_plane(means[idx[i]], normals[idx[i]]):
             continue
         ellip1 = (means[i], us[i], vs[i], scales[i][0], scales[i][1])
-        for n in range(10):
+        for n in range(5):
             ellip2 = (means[idx[i][n+1]], us[idx[i][n+1]], vs[idx[i][n+1]], scales[idx[i][n+1]][0], scales[idx[i][n+1]][1])
             new_gs = fill_in_two_ellips(ell1=ellip1,ell2=ellip2)
             if new_gs is None:

@@ -172,10 +172,10 @@ class GaussianSplatting(LightningModule):
             if self.hparams["initialize_from"] is None:#从SfM的点云文件初始化
 
                 #读激光点云
-                points,colors=get_pcd_from_plyfile("/media/allen/新加卷/CityGaussian/data/geometry_gt/jinguilou_post/lidar.ply")
+                #points,colors=get_pcd_from_plyfile("/media/allen/新加卷/CityGaussian/data/geometry_gt/jinguilou_post/lidar.ply")
                 
                 #用激光点云初始化
-                self.gaussian_model.setup_from_pcd(xyz=points, rgb=colors)
+                #self.gaussian_model.setup_from_pcd(xyz=points, rgb=colors)
 
                 #激光点云和稀疏点云融合
                 #xyz,rgb=integrate_points(points,colors*255.,self.trainer.datamodule.point_cloud.xyz,self.trainer.datamodule.point_cloud.rgb)
@@ -183,7 +183,7 @@ class GaussianSplatting(LightningModule):
                 #self.gaussian_model.setup_from_pcd(xyz=xyz, rgb=rgb / 255.)
 
                 #用稀疏点云初始化
-                #self.gaussian_model.setup_from_pcd(xyz=self.trainer.datamodule.point_cloud.xyz, rgb=self.trainer.datamodule.point_cloud.rgb / 255.)
+                self.gaussian_model.setup_from_pcd(xyz=self.trainer.datamodule.point_cloud.xyz, rgb=self.trainer.datamodule.point_cloud.rgb / 255.)
             else:
                 self._initialize_gaussians_from_trained_model()
         else:
