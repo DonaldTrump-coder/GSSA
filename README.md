@@ -6,6 +6,8 @@
   </p>
 </p>
 
+Our work will be publicly available once published.
+
 <!--
 <div id="top" align="center">
 
