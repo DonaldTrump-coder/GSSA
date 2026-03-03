@@ -1,14 +1,14 @@
 <br>
 <p align="center">
-<h1 align="center"><strong>CityGaussian Series for High-quality Large-Scale Scene Reconstruction with Gaussians</strong></h1>
+<h1 align="center"><strong>GSSA: Gaussian Surfels with Spatial Awareness for Surface Reconstruction</strong></h1>
   <p align="center">
-    <em>Institute of Automation, Chinese Academy of Sciences; University of Chinese Academy of Sciences</em>
+    <em>School of Geoscience and Info-Physics, Central South University; Guangxi Beibu Gulf Investment Group Co., Ltd.</em>
   </p>
 </p>
 
+<!--
 <div id="top" align="center">
 
-[![](https://img.shields.io/badge/%F0%9F%9A%80%20Project-V1-green)](https://dekuliutesla.github.io/citygs/)
 [![HuggingFace](https://img.shields.io/badge/%F0%9F%A4%97-Hugging%20Face-green)](https://huggingface.co/TeslaYang123/CityGaussian)
 [![](https://img.shields.io/badge/%F0%9F%9A%80%20Project-V2-blue)](https://dekuliutesla.github.io/CityGaussianV2/)
 [![HuggingFace](https://img.shields.io/badge/%F0%9F%A4%97-Hugging%20Face-blue)](https://huggingface.co/TeslaYang123/CityGaussianV2)
@@ -127,3 +127,4 @@ This repo benefits from [3DGS](https://github.com/graphdeco-inria/gaussian-splat
 - _Generation of COLMAP results._ We use the ground-truth poses offered by datasets and separately match the train and test sets. And this will be faster and more robust than match from scratch. But indeed it still costs a lot of time.
 
 - _Most blocks are not trained._ The main reason here is the data assigned to most blocks are too few (<50), and to prevent overfitting these blocks won't get trained. This can be attributed to unreasonable aabb setting, please try to adjust it and see if things work.
+-->
