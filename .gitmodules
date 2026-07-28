@@ -10,3 +10,6 @@
 [submodule "submodules/diff-trim-surfel-rasterization"]
 	path = submodules/diff-trim-surfel-rasterization
 	url = https://github.com/YuxueYang1204/diff-surfel-rasterization
+[submodule "submodules/sdf-constructor"]
+	path = submodules/sdf-constructor
+	url = https://github.com/DonaldTrump-coder/SDF-constructor

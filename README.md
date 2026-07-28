@@ -3,15 +3,16 @@
 <h1 align="center"><strong>GSSA: Gaussian Surfels with Spatial Awareness for Surface Reconstruction</strong></h1>
 
 <div id="top" align="center">
-
-<a href="https://donaldtrump-coder.github.io/files/gssa.pdf"><img src="https://img.shields.io/badge/PDF-Paper-red" alt="PDF"></a>
-[![](https://img.shields.io/badge/%F0%9F%9A%80%20Project-V2-blue)](https://dekuliutesla.github.io/CityGaussianV2/)
-[![HuggingFace](https://img.shields.io/badge/%F0%9F%A4%97-Hugging%20Face-blue)](https://huggingface.co/TeslaYang123/CityGaussianV2)
-[![](https://img.shields.io/badge/📄-中文解读-red)](https://zhuanlan.zhihu.com/p/26862925999)
-![GitHub Repo stars](https://img.shields.io/github/stars/DekuLiuTesla/CityGaussian)
-[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-
+<a href="https://donaldtrump-coder.github.io/GSSA/static/paper.pdf"><img src="https://img.shields.io/badge/PDF-Paper-red" alt="PDF"></a>
+<a href="https://www.mdpi.com/journal/remotesensing"><img src="https://img.shields.io/badge/Journal-Remote%20Sensing-blue" alt="Journal"></a>
+<a href="https://donaldtrump-coder.github.io/GSSA/"><img src="https://img.shields.io/badge/Project%20Page-0A66C2?logo=homepage&logoColor=white"></a>
+<a href="https://github.com/DonaldTrump-coder/SDF-constructor"><img src="https://img.shields.io/badge/Core-SDF--constructor-8A2BE2" alt="Core Engine"></a>
+<img src="https://img.shields.io/github/stars/DonaldTrump-coder/GSSA" alt="Stars">
+<img src="https://img.shields.io/github/forks/DonaldTrump-coder/GSSA" alt="Forks">
+<img src="https://img.shields.io/github/last-commit/DonaldTrump-coder/GSSA" alt="Last Commit">
+<a href="LICENSE.md"><img src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey" alt="License"></a>
 </div>
+<br>
 
 <p align="center">
   <a href="https://donaldtrump-coder.github.io/"><strong>Haojun Tang</strong></a>,
@@ -27,115 +28,104 @@
   </p>
 </p>
 
-<!--
-
-<p align="center">
-  <img width="460" height="300" src="assets/demo.gif">
+<p>
+This repo is the official implementation of <strong>GSSA: Gaussian Surfels with Spatial Awareness for Surface Reconstruction</strong>, accepted at <em>Remote Sensing</em> in 2026. Here is the <a href = "https://donaldtrump-coder.github.io/GSSA/static/paper.pdf">PDF paper</a>. Star ⭐ us if you like it!
 </p>
 
-This repo contains official implementations of our series of work in large-scale scene reconstruction with Gaussian Splatting, Star ⭐ us if you like it!
-- [CityGaussianV2: Efficient and Geometrically Accurate Reconstruction for Large-Scale Scenes](https://arxiv.org/pdf/2411.00771) (ICLR 2025)
-- [CityGaussian: Real-time High-quality Large-Scale Scene Rendering with Gaussians](https://arxiv.org/pdf/2404.01133) (ECCV 2024)
+<p align="center">
+  <img src="docs/static/images//Pipeline.png" alt="GSSA Pipeline" width="85%">
+</p>
 
-The links above point to the papers. The main branch now has been rebased to [Gaussian Lightning v0.10.1](https://github.com/yzslab/gaussian-splatting-lightning). If you need to visit the original V1 code, please turn to the `V1-Original` branch. Feel free to explore the repository!
+## News
+<ul>
+  <li><strong>[2026.07]</strong> Code and <a href="https://donaldtrump-coder.github.io/GSSA/">Project Page</a> released!</li>
+  <li><strong>[2026.07]</strong> Our core rasterization & TSDF engine released at <a href="https://github.com/DonaldTrump-coder/SDF-constructor">SDF-constructor</a>!</li>
+  <li><strong>[2026.07]</strong> Paper accepted at <em>Remote Sensing</em>!</li>
+</ul>
 
-## 👏 Features
-* CityGaussian-style multi-gpu reconstruction with controllable memory cost and no limit on GPU amount
-* Analysis of model partition and data assignment
-* 2DGS-style mesh extraction & Large-scale scene geometric performance evaluation
-* Trajectory aligned rendering & mesh video generation with floater removement
-* Features of [Gaussian Lightning](https://github.com/yzslab/gaussian-splatting-lightning), including web viewer, MipSplatting, AbsGS, StopThePop, etc.
+## Quick Start
+### Environment
+<strong>A. Clone repository</strong>
 
-<details>
-<summary><span style="font-weight: bold;">Table Results & Checkpoints </span></summary>
-
-| Scene | SSIM↑ | PSNR↑ | LPIPS↓ | Precision↑ | Recall↑ | F1-Score↑ | #GS(M) |
-| :---: | :---: | :---: | :---: | :---:|:---:| :---: | :---: |
-| LFLS | 0.744 | 23.44 | 0.246 | 0.556 | 0.400 | 0.466 | 8.19 |
-| SMBU | 0.794 | 24.00 | 0.185 | 0.559 | 0.523 | 0.541 | 5.33 |
-| Upper Campus | 0.779 | 25.78 | 0.186 | 0.654 | 0.394 | 0.491 | 7.87 |
-| MatrixCity Aerial | 0.859 | 27.26 | 0.175 | 0.432 | 0.790 | 0.559 | 8.57 |
-| MatrixCity Street | 0.791 | 22.32 | 0.344 | 0.325 | 0.797 | 0.461 | 7.40 |
-
-Note for street view, the F1-Score is lower than that reported in paper, since we sacrifice precision for a better recall and more complete road surface. If unbroken road is prefered, you can adjust `depth_ratio` to 0.0, but surface reconstruction performance will be worse. The checkpoints of CityGSV2 can be found here:
-
-- Baidu Netdisk: https://pan.baidu.com/s/1tRKiJzMLk2-zoyvoa9bkqA?pwd=1b4r
-- Hugging Face: https://huggingface.co/TeslaYang123/CityGaussianV2
-
-</details>
-
-## 📰 News
-**[2025.01.31]** Checkpoints of CityGaussian V2 has been released!
-
-**[2025.01.22]** CityGaussian V2 has been accepted by ICLR 2025!
-
-**[2025.01.22]** Code of CityGaussian V2 is now released. Welcome to try it out!
-
-**[2024.11.04]** Announcement of our [CityGaussianV2](https://dekuliutesla.github.io/CityGaussianV2/)!
-
-**[2024.10.12]** Checkpoints of V1 on main datasets have been released! 
-
-**[2024.08.05]** Code of CityGaussian V1 is available!
-
-## 🛠 Getting Started
-- [Installation](doc/installation.md)
-- [Data Preparation](doc/data_preparation.md)
-- [Run and Eval](doc/run&eval.md)
-- [Video Rendering on GS and Mesh](doc/render_video.md)
-
-
-## 📝 TODO List
-
-- \[ \] Official Implementation of Appearance Embedding.
-- \[ \] Support of V1 style LoD.
-- \[x\] Release the checkpoint of CityGaussian V2.
-- \[x\] Release the V2 of CityGaussian.
-- \[x\] Release code and checkpoints of CityGaussian.
-- \[x\] Release ColMap results of main datasets.
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=DekuLiuTesla/CityGaussian&type=Date)](https://star-history.com/#DekuLiuTesla/CityGaussian&Date)
-
-## 📄 License
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
-<br />
-This work is under the <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
-
-## 🤗 Citation
-If you find this repository useful, please use the following BibTeX entry for citation.
-```latex
-@misc{liu2024citygaussianv2efficientgeometricallyaccurate,
-      title={CityGaussianV2: Efficient and Geometrically Accurate Reconstruction for Large-Scale Scenes}, 
-      author={Yang Liu and Chuanchen Luo and Zhongkai Mao and Junran Peng and Zhaoxiang Zhang},
-      year={2024},
-      eprint={2411.00771},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2411.00771}, 
-}
+```bash
+git clone https://github.com/DonaldTrump-coder/GSSA --recursive
+cd GSSA
 ```
 
-```latex
-@inproceedings{liu2025citygaussian,
-  title={Citygaussian: Real-time high-quality large-scale scene rendering with gaussians},
-  author={Liu, Yang and Luo, Chuanchen and Fan, Lue and Wang, Naiyan and Peng, Junran and Zhang, Zhaoxiang},
-  booktitle={European Conference on Computer Vision},
-  pages={265--282},
-  year={2025},
-  organization={Springer}
-}
+<strong>B. Create python environment</strong>
+
+```bash
+conda create -n gssa python=3.9
+conda activate gssa
 ```
 
-## 👏 Acknowledgements
+<strong>C. Install PyTorch</strong>
+<ul><li>For CUDA 11.8</li></ul>
 
-This repo benefits from [3DGS](https://github.com/graphdeco-inria/gaussian-splatting), [2DGS](), [TrimGS](https://github.com/YuxueYang1204/TrimGS), [LightGaussian](https://github.com/VITA-Group/LightGaussian), [Gaussian Lightning](https://github.com/yzslab/gaussian-splatting-lightning). Thanks for their great work!
+```bash
+pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
+or
+pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 -f https://download.pytorch.org/whl/cu118 -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
 
-## ❓ FAQ
-- _Out of memory occurs in training._ To finish training with limited VRAM, downsampling images or adjusting max_cache_num (we used a rather large 1024) in train_large.py can be a useful practice. Besides, you can increase `prune_ratio` in parallel tuning to further reduce memory cost.
+<strong>D. Install requirements</strong>
 
-- _Generation of COLMAP results._ We use the ground-truth poses offered by datasets and separately match the train and test sets. And this will be faster and more robust than match from scratch. But indeed it still costs a lot of time.
+```bash
+pip install "numpy<2" --force-reinstall
+pip install -r requirements.txt
+pip install -r requirements/CityGS.txt
+pip install -r requirements/common.txt
+pip install pybind11
+pip install torchmetrics==1.1.0
+pip install submodules/simple-knn
+pip install submodules/diff-trim-surfel-rasterization
+pip install submodules/diff-gaussian-rasterization
+pip install submodules/sdf-constructor
+```
 
-- _Most blocks are not trained._ The main reason here is the data assigned to most blocks are too few (<50), and to prevent overfitting these blocks won't get trained. This can be attributed to unreasonable aabb setting, please try to adjust it and see if things work.
--->
+<strong>E. Prepare for depth-estimation model</strong>
+
+```bash
+git clone https://github.com/DepthAnything/Depth-Anything-V2 utils/Depth-Anything-V2
+mkdir utils/Depth-Anything-V2/checkpoints
+wget -O utils/Depth-Anything-V2/checkpoints/depth_anything_v2_vitl.pth "https://huggingface.co/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth?download=true"
+```
+
+### Running
+<strong>A. Data Preprocessing</strong>
+
+```bash
+python utils/image_downsample.py data/your_scene/images --factor $DOWNSAMPLE_RATIO
+python utils/estimate_dataset_depths.py data/your_scene -d $DOWNSAMPLE_RATIO
+```
+`$DOWNSAMPLE_RATIO` (>1) is also set in the YAML of config.
+
+<strong>B. Gaussian Training</strong>
+
+```bash
+python main.py fit \
+        --config configs/$SCENE_NAME.yaml \
+        -n $SCENE_NAME
+```
+
+<strong>C. Surface Extraction</strong>
+
+```bash
+python utils/gs2d_mesh_extraction.py \
+        outputs/$SCENE_NAME \
+        --voxel_size $VOXEL_SIZE
+```
+
+## License
+This project is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Commercial use requires prior consent. See [LICENSE](LICENSE.md) details.
+
+## Citation
+If you find our work helpful, please cite:
+```bibtex
+@article{tang2026gssa,
+    title = {GSSA: Gaussian Surfels with Spatial Awareness for Surface Reconstruction},
+    author = {Tang, Haojun and Zou, Siyuan and Pan, Hongbo and Lu, Yixin and Zhou, Shun},
+    journal = {Remote Sensing},
+    year = {2026}
+}
+```
