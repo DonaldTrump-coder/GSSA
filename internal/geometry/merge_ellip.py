@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D  # 3D 支持
+from mpl_toolkits.mplot3d import Axes3D  # 3D 
 
 def normalize(x, eps=1e-12):
     n = np.linalg.norm(x)
@@ -10,7 +10,7 @@ def normalize(x, eps=1e-12):
 
 def ellipse_Sigma2_from_axis_dirs_3d(a, b, axis1_3, axis2_3, e1, e2):
     """
-    返回平面基 (e1,e2) 下的 2x2 Sigma
+     (e1,e2)  2x2 Sigma
     """
     v1 = np.array([np.dot(axis1_3, e1), np.dot(axis1_3, e2)])
     v2 = np.array([np.dot(axis2_3, e1), np.dot(axis2_3, e2)])
@@ -61,16 +61,15 @@ def ellipse_params_from_A_2d(c2, A):
 
 def merge_two_ellipses_3d(ell1, ell2, m=128, safety_factor=1.0):
     """
-    合并两个 3D 椭圆 (同一平面内).
+     3D  ().
     ell = (C3, axis1_unit_3, axis2_unit_3, a, b)
-    返回: {"center", "axis_dir1_3", "axis_dir2_3", "scale1", "scale2"}
+    : {"center", "axis_dir1_3", "axis_dir2_3", "scale1", "scale2"}
     """
     C1, ax11, ax12, a1, b1 = ell1
     C2, ax21, ax22, a2, b2 = ell2
     if np.linalg.norm(C1-C2)<0.001:
         return None
 
-    # 平面法向
     n1 = np.cross(ax11, ax12)
     n2 = np.cross(ax21, ax22)
     n = n1 + n2
@@ -78,10 +77,10 @@ def merge_two_ellipses_3d(ell1, ell2, m=128, safety_factor=1.0):
         return None
     n = normalize(n)
 
-    # 选择平面原点 = (C1+C2)/2 在平面上的投影
+    #  = (C1+C2)/2 
     mid = 0.5*(C1 + C2)
 
-    # 平面基 (e1,e2)
+    #  (e1,e2)
     e1 = ax11 - np.dot(ax11, n)*n
     if np.linalg.norm(e1) < 1e-12:
         v = C2 - C1
@@ -99,7 +98,7 @@ def merge_two_ellipses_3d(ell1, ell2, m=128, safety_factor=1.0):
     Sigma1 = ellipse_Sigma2_from_axis_dirs_3d(a1, b1, ax11, ax12, e1, e2)
     Sigma2 = ellipse_Sigma2_from_axis_dirs_3d(a2, b2, ax21, ax22, e1, e2)
 
-    # 生成支撑点 (取更远的那个点)
+    #  ()
     thetas = np.linspace(0, 2*np.pi, m, endpoint=False)
     pts2 = []
     for th in thetas:
@@ -127,10 +126,10 @@ def merge_two_ellipses_3d(ell1, ell2, m=128, safety_factor=1.0):
 
     return {
         "center": center3,
-        "axis_vec1_3": axis_dir1_3,  # 单位方向向量
+        "axis_vec1_3": axis_dir1_3,  # 
         "axis_vec2_3": axis_dir2_3,
-        "scale1": a_out,             # 半长轴
-        "scale2": b_out              # 半短轴
+        "scale1": a_out,             # 
+        "scale2": b_out              # 
     }
 
 def plot_points_3d(pts, color='b', size=20, label=None):
@@ -142,14 +141,5 @@ def plot_points_3d(pts, color='b', size=20, label=None):
     ax.set_zlabel('Z')
     if label:
         ax.legend()
-    ax.set_box_aspect([1,1,1])  # 坐标轴比例相同
+    ax.set_box_aspect([1,1,1])  # 
     plt.show()
-
-
-if __name__ == "__main__":
-    ell1 = (np.array([0.0,0.0,0.0]), normalize(np.array([1,0,0])), normalize(np.array([0,1,0])), 3.0, 1.0)
-    ell2 = (np.array([4.0,0.2,0.0]), normalize(np.array([0.98,0.1,0])), normalize(np.array([-0.1,0.98,0])), 2.0, 0.8)
-
-    res = merge_two_ellipses_simple_3d(ell1, ell2, m=128, safety_factor=1.01)
-    ok, max_v = verify_coverage_simple(ell1, ell2, res)
-    print("covered?", ok, "max value:", max_v)

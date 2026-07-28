@@ -46,13 +46,13 @@ def store_ply(path, xyz:np.ndarray, rgb:np.ndarray):
     # Define the dtype for the structured array
     dtype = [('x', 'f4'), ('y', 'f4'), ('z', 'f4'),
              ('nx', 'f4'), ('ny', 'f4'), ('nz', 'f4'),
-             ('red', 'u1'), ('green', 'u1'), ('blue', 'u1')]#ply文件的数据类型
+             ('red', 'u1'), ('green', 'u1'), ('blue', 'u1')]#ply
 
-    normals = np.zeros_like(xyz)#生成形状一样，数值为0的矩阵
+    normals = np.zeros_like(xyz)#0
 
-    elements = np.empty(xyz.shape[0], dtype=dtype)#结构化数组
-    attributes = np.concatenate((xyz, normals, rgb), axis=1)#数组拼接
-    elements[:] = list(map(tuple, attributes))#每个点的属性放入结构化数组中
+    elements = np.empty(xyz.shape[0], dtype=dtype)#
+    attributes = np.concatenate((xyz, normals, rgb), axis=1)#
+    elements[:] = list(map(tuple, attributes))#
 
     # Create the PlyData object and write to file
     vertex_element = PlyElement.describe(elements, 'vertex')

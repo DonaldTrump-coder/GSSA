@@ -27,3 +27,6 @@ clusters
 segments
 **/__pycache__
 *.ply
+install.sh
+run.sh
+*/Depth-Anything-V2

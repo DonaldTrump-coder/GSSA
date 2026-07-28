@@ -179,9 +179,9 @@ def build_rotation(r):
     return R
 
 
-def build_scaling_rotation(s, #缩放向量
-                           r #旋转向量
-                           ):#缩放旋转矩阵
+def build_scaling_rotation(s, #
+                           r #
+                           ):#
     L = torch.zeros((s.shape[0], 3, 3), dtype=torch.float, device=s.device)
     R = build_rotation(r)
 

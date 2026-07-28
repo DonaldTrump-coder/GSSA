@@ -8,6 +8,3 @@ def filter_multiple(mesh,meshfile):
     mesh.remove_unreferenced_vertices()
     o3d.io.write_triangle_mesh(meshfile,mesh)
     return mesh
-
-if __name__=="__main__":
-    filter_multiple("/media/allen/新加卷/CityGaussian/fuse.ply")

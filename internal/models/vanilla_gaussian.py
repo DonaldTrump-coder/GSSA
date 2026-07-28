@@ -101,7 +101,6 @@ class VanillaGaussianModel(
         pl_module.on_after_backward_hooks.append(hook)
 
     def setup_from_pcd(self, xyz: Union[torch.Tensor, np.ndarray], rgb: Union[torch.Tensor, np.ndarray], *args, **kwargs):
-        #用点云数据初始化
         from internal.utils.sh_utils import RGB2SH
 
         if isinstance(xyz, np.ndarray):
@@ -112,9 +111,9 @@ class VanillaGaussianModel(
             rgb = torch.tensor(rgb)
 
         fused_point_cloud = xyz.float()
-        fused_color = RGB2SH(rgb.float())#将rgb颜色转为球谐系数
+        fused_color = RGB2SH(rgb.float())#rgb
 
-        n_gaussians = fused_point_cloud.shape[0]#高斯的个数
+        n_gaussians = fused_point_cloud.shape[0]#
 
         # SHs
         shs = torch.zeros((n_gaussians, 3, (self.config.sh_degree + 1) ** 2)).float()
@@ -131,11 +130,11 @@ class VanillaGaussianModel(
 
         # rotations
         #rots = torch.zeros((fused_point_cloud.shape[0], 4))
-        #rots[:, 0] = 1#初始化时，无旋转
+        #rots[:, 0] = 1#
 
         # opacities
         opacities = inverse_sigmoid(0.3 * torch.ones((fused_point_cloud.shape[0], 1), dtype=torch.float))
-        #逆sigmoid计算
+        #sigmoid
 
         means = nn.Parameter(fused_point_cloud.requires_grad_(True))
         shs_dc = nn.Parameter(shs[:, :, 0:1].transpose(1, 2).contiguous().requires_grad_(True))
@@ -145,7 +144,6 @@ class VanillaGaussianModel(
         scales = nn.Parameter(scales.requires_grad_(True))
         rotations = nn.Parameter(rota.float().requires_grad_(True))
         opacities = nn.Parameter(opacities.requires_grad_(True))
-        #将高斯参数都包装为模型的参数，参与梯度计算与更新
 
         property_dict = {
             "means": means,
@@ -164,7 +162,6 @@ class VanillaGaussianModel(
         pass
 
     def setup_from_number(self, n: int, *args, **kwargs):
-        #直接用高斯个数初始化
         means = torch.zeros((n, 3))
         shs = torch.zeros((n, 3, (self.max_sh_degree + 1) ** 2))
         shs_dc = shs[:, :, 0:1].transpose(1, 2).contiguous()
@@ -206,7 +203,6 @@ class VanillaGaussianModel(
         if "shs_rest" in tensors:
             shs_rest_dims = tensors["shs_rest"].shape[1]
             sh_degree = -1
-            #从球谐系数的个数推断球谐函数的阶数
             for i in range(4):
                 if shs_rest_dims == (i + 1) ** 2 - 1:
                     sh_degree = i
@@ -244,7 +240,6 @@ class VanillaGaussianModel(
         if active_sh_degree == -1:
             active_sh_degree = sh_degree
         self.active_sh_degree = min(active_sh_degree, sh_degree)
-        #激活的球谐系数
 
         return unused_properties, unmet_properties
 
@@ -270,7 +265,7 @@ class VanillaGaussianModel(
         # the param name and property name must be identical
 
         # means
-        #为means配置优化器
+        #means
         means_lr_init = optimization_config.means_lr_init * spatial_lr_scale*0.1
         means_optimizer = optimizer_factory.instantiate(
             [{'params': [self.gaussians["means"]], "name": "means"}],
@@ -312,7 +307,7 @@ class VanillaGaussianModel(
             return
         if self._active_sh_degree >= self.config.sh_degree:
             return
-        self._active_sh_degree += 1#增加球谐函数阶数
+        self._active_sh_degree += 1#
 
     # define properties by getters and setters
 
@@ -363,7 +358,6 @@ class VanillaGaussianModel(
         return self.gaussians["shs"]
 
     def pre_activate_all_properties(self):
-        #训练之前激活所有的属性
         self.is_pre_activated = True
 
         self.scales = self.get_scales()
@@ -394,7 +388,6 @@ class VanillaGaussianModel(
         self.opacity_inverse_activation = self._return_as_is
 
     def get_non_pre_activated_properties(self):
-        #反激活
         if self.is_pre_activated is True:
             activated_properties = self.properties
             keys = list(activated_properties.keys())
@@ -410,7 +403,7 @@ class VanillaGaussianModel(
             for key in keys:
                 non_pre_activated_properties[key] = activated_properties[key]
 
-            return non_pre_activated_properties#返回激活之前的所有属性值
+            return non_pre_activated_properties#
         else:
             return self.properties
 
@@ -441,10 +434,10 @@ class VanillaGaussianModel(
                                                scaling_modifier, 
                                                rotation
                                                ):
-        #构建协方差矩阵（3DGS论文中的公式）
+        #3DGS
         L = build_scaling_rotation(scaling_modifier * scaling, rotation)
         actual_covariance = L @ L.transpose(1, 2)
-        symm = strip_symmetric(actual_covariance)#对称性处理
+        symm = strip_symmetric(actual_covariance)#
         return symm
 
     def get_covariance(self, 
@@ -471,9 +464,9 @@ def get_rotations_from_pcd(xyz:np.ndarray):
     dot_products = np.einsum('ij,j->i', normal, ref)
     angle = np.arccos(np.clip(dot_products, -1.0, 1.0))
 
-    #计算每个旋转向量 rotvec = axis * angle
+    # rotvec = axis * angle
     axes_norm = np.linalg.norm(axis, axis=1, keepdims=True)
-    #避免除以 0
+    # 0
     axes_unit = np.divide(axis, axes_norm, where=axes_norm > 1e-6)
 
     rotvecs = axes_unit * angle[:, None]
@@ -481,22 +474,21 @@ def get_rotations_from_pcd(xyz:np.ndarray):
     rotations = R.from_rotvec(rotvecs)
     quaternions = rotations.as_quat()  # shape: (N, 4), format: x, y, z, w
 
-    # 转换为 Open3D 常用格式 w, x, y, z
+    #  Open3D  w, x, y, z
     quaternions = np.concatenate([quaternions[:, 3:4], quaternions[:, :3]], axis=1)
     
     return quaternions
 
 def quaternions_to_axes(quaternions):
-    # 四元数格式转换 w,x,y,z -> x,y,z,w
+    #  w,x,y,z -> x,y,z,w
     quats_xyzw = np.concatenate([quaternions[:,1:], quaternions[:,0:1]], axis=1)
     rotations = R.from_quat(quats_xyzw)
 
-    # 每个旋转的矩阵 (N, 3, 3)
+    #  (N, 3, 3)
     matrices = rotations.as_matrix()
 
-    # 提取旋转后的三个轴向量
-    x_axes = matrices[:, :, 0]  # 第一列
-    y_axes = matrices[:, :, 1]  # 第二列
-    z_axes = matrices[:, :, 2]  # 第三列（即法线方向）
+    x_axes = matrices[:, :, 0]  # 
+    y_axes = matrices[:, :, 1]  # 
+    z_axes = matrices[:, :, 2]  # 
 
     return x_axes, y_axes, z_axes

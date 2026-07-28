@@ -11,11 +11,11 @@ class GaussianModel(nn.Module, ABC):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.gaussians = self.setup_gaussians_container()
-        #gaussians是属性字典
+        #gaussians
 
     @staticmethod
     def setup_gaussians_container():
-        return nn.ParameterDict()#创建属性字典，将所有高斯的所有属性存入，且可自动优化
+        return nn.ParameterDict()#
 
     @abstractmethod
     def get_property_names(self) -> Tuple[str, ...]:
@@ -68,7 +68,7 @@ class GaussianModel(nn.Module, ABC):
         self.set_properties(properties)
 
     def get_n_gaussians(self) -> int:
-        return self.gaussians[next(iter(self.gaussians))].shape[0]#获取高斯点的数量
+        return self.gaussians[next(iter(self.gaussians))].shape[0]#
 
     @property
     def n_gaussians(self) -> int:
@@ -76,7 +76,6 @@ class GaussianModel(nn.Module, ABC):
 
     def freeze(self):
         self.gaussians = FreezableParameterDict(self.gaussians, new_requires_grad=False)
-        #停止更新高斯参数
 
     @abstractmethod
     def setup_from_pcd(self, xyz, rgb, *args, **kwargs):
@@ -218,8 +217,8 @@ class HasOpacityGetter(ABC):
 
 
 class HasSHs(ABC):
-    _shs_dc_name = "shs_dc"#零阶分量
-    _shs_rest_name = "shs_rest"#高阶分量
+    _shs_dc_name = "shs_dc"#
+    _shs_rest_name = "shs_rest"#
 
     # shs_dc
 

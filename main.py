@@ -5,4 +5,4 @@ if __name__ == "__main__":
     start = time.time()
     cli()
     end = time.time()
-    print(f"运行时间: {end-start}秒")
+    print(f"Time: {end-start} sec")

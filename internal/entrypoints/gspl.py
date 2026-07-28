@@ -10,9 +10,9 @@ from internal.callbacks import SaveGaussian, KeepRunningIfWebViewerEnabled, Stop
 
 def cli(args: ArgsType = None):
     CLI(
-        GaussianSplatting,#模型
-        DataModule,#数据
-        seed_everything_default=42,#传入不在yaml文件中的默认配置
+        GaussianSplatting,#
+        DataModule,#
+        seed_everything_default=42,#yaml
         auto_configure_optimizers=False,
         trainer_defaults={
             "accelerator": "gpu",
@@ -40,8 +40,8 @@ def cli(args: ArgsType = None):
 
 
 def cli_with_subcommand(subcommand: str):
-    sys.argv.insert(1, subcommand)#插入子命令
-    cli()#cli入口函数
+    sys.argv.insert(1, subcommand)#
+    cli()#cli
 
 
 def cli_fit():

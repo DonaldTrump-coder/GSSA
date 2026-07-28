@@ -19,7 +19,7 @@ class CityGSV2DensityControllerModule(VanillaDensityControllerImpl):
         scene_extent = self.cameras_extent
 
         device = gaussian_model.get_property("means").device
-        n_init_points = gaussian_model.n_gaussians#高斯数量
+        n_init_points = gaussian_model.n_gaussians#
         scales = gaussian_model.get_scales()
 
         # The number of Gaussians and `grads` is different after cloning, so padding is required
@@ -39,7 +39,6 @@ class CityGSV2DensityControllerModule(VanillaDensityControllerImpl):
 
         axis_ratio = scales.min(dim=1).values / scales.max(dim=1).values
         selected_pts_mask = torch.logical_and(selected_pts_mask, axis_ratio > self.config.axis_ratio_threshold)
-        #去掉长宽比太大的高斯
 
         # Split
         new_properties = self._split_properties(gaussian_model, selected_pts_mask, N)

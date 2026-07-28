@@ -24,18 +24,18 @@ class EstimatedDepthBlockColmap(ColmapBlock):
 
 class EstimatedDepthBlockColmapDataParser(ColmapBlockDataParser):
     def get_outputs(self) -> DataParserOutputs:
-        dataparser_outputs = super().get_outputs()#初始化图像路径、mask路径等属性
+        dataparser_outputs = super().get_outputs()#mask
 
         if self.params.depth_rescaling is True:
             with open(os.path.join(self.path, self.params.depth_scale_name + ".json"), "r") as f:
-                depth_scales = json.load(f)#读入深度尺度信息
+                depth_scales = json.load(f)#
 
-            median_scale = np.median(np.asarray([i["scale"] for i in depth_scales.values()]))#获取中位数深度
+            median_scale = np.median(np.asarray([i["scale"] for i in depth_scales.values()]))#
 
         loaded_depth_count = 0
-        for image_set in [dataparser_outputs.train_set, dataparser_outputs.val_set]:#遍历所有的相片数据
+        for image_set in [dataparser_outputs.train_set, dataparser_outputs.val_set]:#
             for idx, image_name in enumerate(image_set.image_names):
-                depth_file_path = os.path.join(self.path, self.params.depth_dir, f"{image_name}.npy")#深度数据文件
+                depth_file_path = os.path.join(self.path, self.params.depth_dir, f"{image_name}.npy")#
                 if os.path.exists(depth_file_path) is False:
                     print("[WARNING] {} does not have a depth file".format(image_name))
                     continue

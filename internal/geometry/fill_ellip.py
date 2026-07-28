@@ -9,15 +9,15 @@ def normalize(v):
 
 def closest_points_between_lines(P0, u, Q0, v, eps=1e-12):
     """
-    求两条直线 P(s)=P0 + s*u, Q(t)=Q0 + t*v 的最近点对。
-    输入:
-      P0, u, Q0, v : ndarray shape (3,) （也可为更高维向量）
-      eps : 判定并行的阈值
-    返回:
-      P_closest : 点在第一条直线上 (P0 + s*u)
-      Q_closest : 点在第二条直线上 (Q0 + t*v)
-      s, t      : 参数值
-      dist      : 最短距离 ||P_closest - Q_closest||
+     P(s)=P0 + s*u, Q(t)=Q0 + t*v 
+    :
+      P0, u, Q0, v : ndarray shape (3,) 
+      eps : 
+    :
+      P_closest :  (P0 + s*u)
+      Q_closest :  (Q0 + t*v)
+      s, t      : 
+      dist      :  ||P_closest - Q_closest||
       midpoint  : (P_closest + Q_closest) / 2
     """
     P0 = np.asarray(P0, dtype=float)
@@ -41,12 +41,11 @@ def closest_points_between_lines(P0, u, Q0, v, eps=1e-12):
         P_closest = P0 + s * u
         Q_closest = Q0 + t * v
     else:
-        # 近似并行情况处理：求使 (P0 + s u) 到直线 Q 的最短点。
-        # 将问题降为投影：对第一条线任取 s，使得 (P0 + s u - Q0) 垂直 u
-        # 实际上并行时有无穷多对等距点，下面给出一个常用的选择：
-        # 令 t = 0 (第二条线的基点)，并选择 s 使得 (P0 + s u) 到 Q0 的向量与 u 垂直投影最短。
-        # 更严谨的做法是将 r 分解：r_para = proj_u(r), r_perp = r - r_para；最近距离为 ||r_perp||。
-        # 这里我们取 s = - (u·r) / (u·u)， t = 0 作为一个具体最近点对。
+        #  (P0 + s u)  Q 
+        #  s (P0 + s u - Q0)  u
+        #  t = 0 () s  (P0 + s u)  Q0  u 
+        #  r r_para = proj_u(r), r_perp = r - r_para ||r_perp||
+        #  s = - (u·r) / (u·u) t = 0 
         P_closest = P0
         Q_closest = Q0
 

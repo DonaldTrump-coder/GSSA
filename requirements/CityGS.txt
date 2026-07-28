@@ -4,3 +4,4 @@ trimesh==4.4.3
 imageio==2.36.0
 imageio-ffmpeg==0.5.1
 py3nvml
+bitsandbytes==0.41.3

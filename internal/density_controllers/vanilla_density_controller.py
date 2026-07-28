@@ -19,9 +19,9 @@ class VanillaDensityController(DensityController):
 
     densify_from_iter: int = 2000
 
-    densify_until_iter: int = 18_000
+    densify_until_iter: int = 15_000
 
-    densify_grad_threshold: float = 0.0001
+    densify_grad_threshold: float = 0.0005
 
     cull_opacity_threshold: float = 0.006
     """threshold of opacity for culling gaussians."""
@@ -37,7 +37,6 @@ class VanillaDensityController(DensityController):
 
 
 class VanillaDensityControllerImpl(DensityControllerImpl):
-    #不根据梯度更新参数，只依据梯度进行密度控制
     def setup(self, stage: str, pl_module: LightningModule) -> None:
         super().setup(stage, pl_module)
 
@@ -59,31 +58,29 @@ class VanillaDensityControllerImpl(DensityControllerImpl):
 
         self.register_buffer("max_radii2D", max_radii2D, persistent=True)
         self.register_buffer("xyz_gradient_accum", xyz_gradient_accum, persistent=True)
-        self.register_buffer("denom", denom, persistent=True)#参数不参与反向传播
+        self.register_buffer("denom", denom, persistent=True)#
 
     def before_backward(self, 
-                        outputs: dict, #前向传播的输出
+                        outputs: dict, #
                         batch, 
                         gaussian_model: VanillaGaussianModel, 
                         optimizers: List, 
-                        global_step: int, #当前步数
+                        global_step: int, #
                         pl_module: LightningModule) -> None:
         if global_step >= self.config.densify_until_iter:
-            return#当前训练步数已经超过了指定的最大步数
+            return#
 
-        outputs["viewspace_points"].retain_grad()#只保留看得到的点的梯度
+        outputs["viewspace_points"].retain_grad()#
 
     def after_backward(self, outputs: dict, batch, gaussian_model: VanillaGaussianModel, optimizers: List, global_step: int, pl_module: LightningModule) -> None:
         if global_step >= self.config.densify_until_iter:
             return
 
-        #未超过最大步数时进行高斯的加密和修剪
-        with torch.no_grad():#不计算梯度
+        with torch.no_grad():#
             self.update_states(outputs)
 
             # densify and pruning
             if global_step > self.config.densify_from_iter and global_step % self.config.densification_interval == 0:
-            #密度控制步骤
                 size_threshold = 20 if global_step > self.config.opacity_reset_interval else None
                 self._densify_and_prune(
                     max_screen_size=size_threshold,
@@ -95,9 +92,8 @@ class VanillaDensityControllerImpl(DensityControllerImpl):
             if global_step % self.config.opacity_reset_interval == 0 or \
                     (
                             torch.all(pl_module.background_color == 1.) and global_step == self.config.densify_from_iter
-                            #背景是白色
                     ):
-                self._reset_opacities(gaussian_model, optimizers)#重置透明度
+                self._reset_opacities(gaussian_model, optimizers)#
             """
 
     def update_states(self, outputs):
@@ -109,33 +105,32 @@ class VanillaDensityControllerImpl(DensityControllerImpl):
         self.max_radii2D[visibility_filter] = torch.max(
             self.max_radii2D[visibility_filter],
             radii[visibility_filter]
-        )#某个可见高斯点的最大半径存储
+        )#
 
-        xys_grad = viewspace_point_tensor.grad#计算反向梯度张量
+        xys_grad = viewspace_point_tensor.grad#
         if self.config.absgrad is True:
-            xys_grad = viewspace_point_tensor.absgrad#计算绝对梯度张量
+            xys_grad = viewspace_point_tensor.absgrad#
         self._add_densification_stats(xys_grad, visibility_filter, scale=viewspace_points_grad_scale)
 
-    def _add_densification_stats(self, #记录每个点的梯度相关状态
-                                 grad, #表示梯度值的张量
-                                 update_filter, #更新高斯的索引
-                                 scale: Union[float, int, None]#对梯度进行缩放
+    def _add_densification_stats(self, #
+                                 grad, #
+                                 update_filter, #
+                                 scale: Union[float, int, None]#
                                  ):
         scaled_grad = grad[update_filter, :2]
         if scale is not None:
-            scaled_grad = scaled_grad * scale#进行梯度缩放
+            scaled_grad = scaled_grad * scale#
         grad_norm = torch.norm(scaled_grad, dim=-1, keepdim=True)
-        #计算每个点梯度的范数
 
-        self.xyz_gradient_accum[update_filter] += grad_norm#存入每个点的梯度范数累计值
-        self.denom[update_filter] += 1#记录每个点更新的次数
+        self.xyz_gradient_accum[update_filter] += grad_norm#
+        self.denom[update_filter] += 1#
 
     def _densify_and_prune(self, max_screen_size, gaussian_model: VanillaGaussianModel, optimizers: List):
-        min_opacity = self.config.cull_opacity_threshold#低于此透明度的高斯会被修剪掉
-        prune_extent = self.prune_extent#修剪范围
+        min_opacity = self.config.cull_opacity_threshold#
+        prune_extent = self.prune_extent#
 
         # calculate mean grads
-        grads = self.xyz_gradient_accum / self.denom#计算平均每个高斯的梯度
+        grads = self.xyz_gradient_accum / self.denom#
         grads[grads.isnan()] = 0.0
 
         # densify
@@ -144,7 +139,7 @@ class VanillaDensityControllerImpl(DensityControllerImpl):
 
         # prune
         prune_mask = (gaussian_model.get_opacities() < min_opacity).squeeze()
-        if max_screen_size:#修剪空间过大的高斯
+        if max_screen_size:#
             big_points_vs = self.max_radii2D > max_screen_size
             big_points_ws = gaussian_model.get_scales().max(dim=1).values > 0.1 * prune_extent
             prune_mask = torch.logical_or(torch.logical_or(prune_mask, big_points_vs), big_points_ws)
@@ -167,7 +162,7 @@ class VanillaDensityControllerImpl(DensityControllerImpl):
 
         # Copy selected Gaussians
         new_properties = {}
-        for key, value in gaussian_model.properties.items():#键值对，key是属性名，value是所有点的属性值
+        for key, value in gaussian_model.properties.items():#keyvalue
             new_properties[key] = value[selected_pts_mask]
 
         # Update optimizers and properties

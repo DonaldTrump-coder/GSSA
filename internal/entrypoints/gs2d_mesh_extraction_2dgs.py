@@ -26,7 +26,6 @@ def extract_bounding_from_np(means):
     xmax,ymax,zmax=means.max(axis=0)
     return np.array([[xmin,ymin,zmin,xmax,ymax,zmax]],dtype=np.float64)
 
-#存储数据的类
 @dataclass
 class CLIArgs:
     model_path: str
@@ -53,9 +52,6 @@ def main():
 
     # load ckpt
     loadable_file = os.path.join(args.model_path,"checkpoints","chkpnt30000.pth")
-    #提取ckpt文件路径
-    #loadable_file = "/media/allen/新加卷/CityGaussian/outputs/jinguilou_post/checkpoints/epoch=811-step=30000.ckpt"
-    #loadable_file = "/media/allen/新加卷/CityGaussian/outputs/jinguilou_post/checkpoints/epoch=28-step=1000.ckpt"
 
     print(loadable_file)
     state_dict = torch.load(loadable_file, map_location='cpu', weights_only=False)
@@ -75,44 +71,15 @@ def main():
     means, opacities, scales, us, vs, normals, shs = gs_clean(means, opacities, scales, us, vs, normals, shs)
     for _ in range(1):
         means, opacities, scales, us, vs, normals, shs = gs_fill(means, opacities, scales, us, vs, normals, shs)
-    #for _ in range(5):
-        #means, opacities, scales, us, vs, normals, shs = gs_fill(means, opacities, scales, us, vs, normals, shs)
 
     name = 'fuse.ply'
     depth_trunc = args.depth_trunc
     voxel_size = args.voxel_size
     sdf_trunc = args.sdf_trunc
 
-    bounding=extract_bounding("data/geometry_gt/jinguilou_post/lidar.ply")
-    dx=(bounding[0][0]+bounding[0][3])/2-bounding[0][0]
-    dy=(bounding[0][1]+bounding[0][4])/2-bounding[0][1]
-    dz=(bounding[0][2]+bounding[0][5])/2-bounding[0][2]
-    bounding[0][0]+=0.85*dx
-    bounding[0][3]-=0.6*dx
-    bounding[0][1]+=0.85*dy
-    bounding[0][4]-=0.6*dy
-    bounding[0][2]+=0.85*dz
-    bounding[0][5]-=0.6*dz
     bounding=extract_bounding_from_np(means=means)
-
-    """
-    """
-    dx=(bounding[0][0]+bounding[0][3])/2-bounding[0][0]
-    dy=(bounding[0][1]+bounding[0][4])/2-bounding[0][1]
-    dz=(bounding[0][2]+bounding[0][5])/2-bounding[0][2]
-    bounding[0][0]=0.402157-15 # creepy
-    bounding[0][3]=0.402157+15
-    bounding[0][1]=1.066930-15
-    bounding[0][4]=1.066930+15
-    bounding[0][2]=-0.047880-15
-    bounding[0][5]=-0.047880+15
-    """
-    """
-
     tsdf=TSDF_forGS.TSDF()
     tsdf.addGrids(bounding[0][0],bounding[0][1],bounding[0][2],bounding[0][3],bounding[0][4],bounding[0][5],voxel_size,sdf_trunc,depth_trunc)
-    #for index in tqdm(range(cameras.__len__()),desc="TSDF Integrating"):
-        #tsdf.TSDF_Integration(get_intrinsic(cameras[index]),get_extrinsic(cameras[index]),reds[index],greens[index],blues[index],depths[index][0],weights[index])
     
     for index in tqdm(range(len(means)),desc="Gaussian Integrating:"):
         tsdf.Gaussian_Integration(means[index].astype(np.float32),shs[index].astype(np.float32),normals[index].astype(np.float32),us[index].astype(np.float32),vs[index].astype(np.float32),scales[index].astype(np.float32),float(opacities[index]),1)

@@ -35,12 +35,12 @@ class GaussianModelLoader:
         if os.path.isdir(model_path) is False:
             return model_path
         # search checkpoint
-        checkpoint_dir = os.path.join(model_path, "checkpoints")# checkpoints文件夹
+        checkpoint_dir = os.path.join(model_path, "checkpoints")# checkpoints
         # find checkpoint with max iterations
         load_from = None
         previous_checkpoint_iteration = -1
 
-        #提取迭代次数最大的ckpt文件
+        #ckpt
         for i in glob.glob(os.path.join(checkpoint_dir, "*.ckpt")):
             try:
                 checkpoint_iteration = int(i[i.rfind("=") + 1:i.rfind(".")])
@@ -69,7 +69,6 @@ class GaussianModelLoader:
 
         return load_from
 
-    #提取带有指定前缀的状态参数
     @staticmethod
     def filter_state_dict_by_prefix(state_dict, prefix: str, device=None):
         prefix_len = len(prefix)
@@ -108,8 +107,8 @@ class GaussianModelLoader:
             else:
                 model = VanillaGaussian(sh_degree=sh_degree).instantiate()
 
-        max_mask=torch.min(model_state_dict["gaussians.scales"],dim=1).values>0.5#大高斯
-        bg_mask=torch.all(SH2RGB(model_state_dict["gaussians.shs_dc"])<0.1,dim=2)#黑色高斯
+        max_mask=torch.min(model_state_dict["gaussians.scales"],dim=1).values>0.5#
+        bg_mask=torch.all(SH2RGB(model_state_dict["gaussians.shs_dc"])<0.1,dim=2)#
         bg_mask=torch.all(bg_mask,dim=1)
         mask=~(max_mask&bg_mask)
 

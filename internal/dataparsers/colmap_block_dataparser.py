@@ -94,7 +94,7 @@ class ColmapBlockDataParser(ColmapDataParser):
 
         # build appearance dict: group name -> image name list
         if self.params.appearance_groups is None:
-            print("appearance group by camera id")#将同一相机拍摄的相片分为一组
+            print("appearance group by camera id")#
             appearance_groups = {}
             for i in images:
                 image_camera_id = images[i].camera_id
@@ -110,7 +110,6 @@ class ColmapBlockDataParser(ColmapDataParser):
         # sort the appearance group name list
         appearance_group_name_list = sorted(list(appearance_groups.keys()))
         appearance_group_num = float(len(appearance_group_name_list))
-        #计算分组数量
 
         # use order as the appearance id of the group
         # map from image name to appearance id
@@ -131,7 +130,6 @@ class ColmapBlockDataParser(ColmapDataParser):
             image_appearance_id.append(image_name_to_appearance_id[images[i].name])
             image_normalized_appearance_id.append(image_name_to_normalized_appearance_id[images[i].name])
 
-        #加载并读取点云文件
         if self.params.points_from == "sfm":
             print("loading colmap 3D points")
             xyz, rgb, _ = ColmapDataParser.read_points3D_binary(
@@ -163,10 +161,10 @@ class ColmapBlockDataParser(ColmapDataParser):
         mask_path_list = []
 
         # parse colmap sparse model
-        for idx, key in enumerate(images):#遍历所有图像
+        for idx, key in enumerate(images):#
             # extract image and its correspond camera
-            extrinsics = images[key]#extrinsics指的是遍历出来的图像
-            intrinsics = cameras[extrinsics.camera_id]#获取相机
+            extrinsics = images[key]#extrinsics
+            intrinsics = cameras[extrinsics.camera_id]#
 
             height = intrinsics.height
             width = intrinsics.width
@@ -244,7 +242,7 @@ class ColmapBlockDataParser(ColmapDataParser):
 
         # recalculate intrinsics if down sample enabled
         if self.params.down_sample_factor != 1:
-            if self.params.down_sample_rounding_mode == "round_half_up":#四舍五入函数选择
+            if self.params.down_sample_rounding_mode == "round_half_up":#
                 rounding_func = self._round_half_up
             else:
                 rounding_func = getattr(torch, self.params.down_sample_rounding_mode)

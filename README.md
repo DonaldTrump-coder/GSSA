@@ -1,25 +1,34 @@
 <br>
 <p align="center">
 <h1 align="center"><strong>GSSA: Gaussian Surfels with Spatial Awareness for Surface Reconstruction</strong></h1>
-  <p align="center">
-    <em>School of Geoscience and Info-Physics, Central South University; Guangxi Beibu Gulf Investment Group Co., Ltd.</em>
-  </p>
-</p>
 
-Our work will be publicly available once published.
-
-<!--
 <div id="top" align="center">
 
-[![HuggingFace](https://img.shields.io/badge/%F0%9F%A4%97-Hugging%20Face-green)](https://huggingface.co/TeslaYang123/CityGaussian)
+<a href="https://donaldtrump-coder.github.io/files/gssa.pdf"><img src="https://img.shields.io/badge/PDF-Paper-red" alt="PDF"></a>
 [![](https://img.shields.io/badge/%F0%9F%9A%80%20Project-V2-blue)](https://dekuliutesla.github.io/CityGaussianV2/)
 [![HuggingFace](https://img.shields.io/badge/%F0%9F%A4%97-Hugging%20Face-blue)](https://huggingface.co/TeslaYang123/CityGaussianV2)
 [![](https://img.shields.io/badge/📄-中文解读-red)](https://zhuanlan.zhihu.com/p/26862925999)
 ![GitHub Repo stars](https://img.shields.io/github/stars/DekuLiuTesla/CityGaussian)
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-
 </div>
+
+<p align="center">
+  <a href="https://donaldtrump-coder.github.io/"><strong>Haojun Tang</strong></a>,
+  <a href="https://github.com/zousiyuan3s/"><strong>Siyuan Zou</strong></a>,
+  <a href="https://faculty.csu.edu.cn/panhongbo/zh_CN/index.htm"><strong>Hongbo Pan</strong></a>,
+  <strong>Yixin Lu</strong>,
+  <strong>Shun Zhou</strong>
+</p>
+  <p align="center">
+    <em>School of Geoscience and Info-Physics, Central South University;<br>
+    Key Laboratory of China-ASEAN Satellite Remote Sensing Applications, Ministry of Natural Resources;<br>
+    Guangxi Beibu Gulf Investment Group Co., Ltd.</em>
+  </p>
+</p>
+
+<!--
+
 <p align="center">
   <img width="460" height="300" src="assets/demo.gif">
 </p>

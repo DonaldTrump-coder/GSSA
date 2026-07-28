@@ -87,7 +87,6 @@ class GaussianSplatting(LightningModule):
             self.get_background_color = self._random_background_color
         else:
             self.get_background_color = self._fixed_background_color
-            #背景颜色张量
 
         self.web_viewer: TrainingViewer = None
 
@@ -136,10 +135,9 @@ class GaussianSplatting(LightningModule):
 
         from internal.utils.gaussian_model_loader import GaussianModelLoader
         load_from = GaussianModelLoader.search_load_file(self.hparams["initialize_from"])
-        #加载预训练参数
 
         # TODO: may be should adapt sh_degree of ply or checkpoint to current value?
-        if load_from.endswith(".ply") is True:#从点云文件加载预训练参数
+        if load_from.endswith(".ply") is True:#
             from internal.utils.gaussian_utils import Gaussian as GaussianUtils
             gaussian_model, _ = GaussianModelLoader.initialize_model_and_renderer_from_ply_file(
                 ply_file_path=load_from,
@@ -168,21 +166,16 @@ class GaussianSplatting(LightningModule):
         print(f"initialize from {load_from}: sh_degree={self.gaussian_model.max_sh_degree}, overwrite_config={self.hparams['overwrite_config']}")
 
     def setup(self, stage: str):
-        if stage == "fit":#训练阶段
-            if self.hparams["initialize_from"] is None:#从SfM的点云文件初始化
+        if stage == "fit":#
+            if self.hparams["initialize_from"] is None:#SfM
 
-                #读激光点云
-                #points,colors=get_pcd_from_plyfile("/media/allen/新加卷/CityGaussian/data/geometry_gt/jinguilou_post/lidar.ply")
+                #points,colors=get_pcd_from_plyfile("/media/allen//CityGaussian/data/geometry_gt/jinguilou_post/lidar.ply")
                 
-                #用激光点云初始化
                 #self.gaussian_model.setup_from_pcd(xyz=points, rgb=colors)
 
-                #激光点云和稀疏点云融合
                 #xyz,rgb=integrate_points(points,colors*255.,self.trainer.datamodule.point_cloud.xyz,self.trainer.datamodule.point_cloud.rgb)
-                #用融合的点云初始化
                 #self.gaussian_model.setup_from_pcd(xyz=xyz, rgb=rgb / 255.)
 
-                #用稀疏点云初始化
                 self.gaussian_model.setup_from_pcd(xyz=self.trainer.datamodule.point_cloud.xyz, rgb=self.trainer.datamodule.point_cloud.rgb / 255.)
             else:
                 self._initialize_gaussians_from_trained_model()

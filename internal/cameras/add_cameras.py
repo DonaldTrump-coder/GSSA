@@ -10,27 +10,25 @@ def visualising_cameras(cameras:list[Camera],pcd_file):
         tensor_list.append(-camera.R.T@camera.T)
         #tensor_list.append(camera.camera_center)
 
-        # 计算锥体底面四个角点在相机坐标系下的坐标
-        # 使用depth作为底面距离，构造一个棱锥
+        # depth
         
         depth=10
         bottom_points_cam = torch.tensor([
-        [(-camera.cx) * depth / camera.fx, (-camera.cy) * depth / camera.fy, depth],  # 左下
-        [(camera.width - camera.cx) * depth / camera.fx, (-camera.cy) * depth / camera.fy, depth],  # 右下
-        [(camera.width - camera.cx) * depth / camera.fx, (camera.height - camera.cy) * depth / camera.fy, depth],  # 右上
-        [(-camera.cx) * depth / camera.fx, (camera.height - camera.cy) * depth / camera.fy, depth],  # 左上
+        [(-camera.cx) * depth / camera.fx, (-camera.cy) * depth / camera.fy, depth],  # 
+        [(camera.width - camera.cx) * depth / camera.fx, (-camera.cy) * depth / camera.fy, depth],  # 
+        [(camera.width - camera.cx) * depth / camera.fx, (camera.height - camera.cy) * depth / camera.fy, depth],  # 
+        [(-camera.cx) * depth / camera.fx, (camera.height - camera.cy) * depth / camera.fy, depth],  # 
         ]).cpu().numpy()
         points_world=(camera.R.cpu().numpy().T)@(bottom_points_cam.T)+np.repeat(-camera.R.cpu().numpy().T@camera.T.cpu().numpy().reshape(3,1),repeats=4,axis=1)
         points_cam=np.vstack([((-camera.R.cpu().numpy().T)@camera.T.cpu().numpy()), points_world.T])
 
-        # 定义三角面（构成棱锥）
         triangles = np.array([
-        [0, 1, 2],  # 前面
-        [0, 2, 3],  # 右面
-        [0, 3, 4],  # 后面
-        [0, 4, 1],  # 左面
-        [1, 4, 3],  # 底面
-        [1, 3, 2]   # 底面
+        [0, 1, 2],  # 
+        [0, 2, 3],  # 
+        [0, 3, 4],  # 
+        [0, 4, 1],  # 
+        [1, 4, 3],  # 
+        [1, 3, 2]   # 
         ])
         mesh = o3d.geometry.TriangleMesh()
         mesh.vertices = o3d.utility.Vector3dVector(points_cam)
@@ -67,10 +65,10 @@ def visualising_cameras(cameras:list[Camera],pcd_file):
     vis.destroy_window()
 
 def add_cameras(pcd_file,cameras:list[Camera],device):
-    pcd=o3d.io.read_point_cloud(pcd_file)#读取点云文件
+    pcd=o3d.io.read_point_cloud(pcd_file)#
     samples=0
-    center,radius=compute_sphere_center_radius(pcd)#计算包围点云的中心和半径
-    center_points=fibonacci_sphere(samples,radius,center)#计算相机中心的位置
+    center,radius=compute_sphere_center_radius(pcd)#
+    center_points=fibonacci_sphere(samples,radius,center)#
     Rs=torch.zeros(samples,3,3,device=device)
     Ts=torch.zeros(samples,3,device=device)
 
@@ -88,19 +86,18 @@ def add_cameras(pcd_file,cameras:list[Camera],device):
     for index in range(samples):
         pos=center_points[index]
         pos=pos+(center-pos)*0.4
-        #主光轴
         z_axis=center-pos
-        z_axis = z_axis / np.linalg.norm(z_axis)  # 归一化
+        z_axis = z_axis / np.linalg.norm(z_axis)  # 
 
-        # 定义一个临时上方向（假设不与Z轴平行）
+        # Z
         temp_up = np.array([0, 1, 0])
-        if np.abs(np.dot(z_axis, temp_up)) > 0.99:  # 如果几乎平行
+        if np.abs(np.dot(z_axis, temp_up)) > 0.99:  # 
             temp_up = np.array([0, 0, 1])
-        # 计算相机X轴
+        # X
         x_axis = np.cross(temp_up, z_axis)
         x_axis = x_axis / np.linalg.norm(x_axis)
 
-        # 计算相机Y轴
+        # Y
         y_axis = np.cross(x_axis,z_axis)
         y_axis = y_axis / np.linalg.norm(y_axis)
 
@@ -146,31 +143,29 @@ def get_extrinsic(camera:Camera):
     return Rt
 
 def compute_sphere_center_radius(pcd):
-    #计算点云的包围球中心和半径
     points = np.asarray(pcd.points)
     center = np.mean(points, axis=0)
     distances = np.linalg.norm(points - center, axis=1)
-    radius = np.max(distances) * 1.2  # 稍微扩大半径，确保完全包围
+    radius = np.max(distances) * 1.2  # 
     return center, radius
 
 def fibonacci_sphere(samples=100, radius=1.0, center=np.zeros(3)):
-    """使用斐波那契网格在球面上生成均匀分布的点"""
+    """"""
     points = []
-    phi = np.pi * (3. - np.sqrt(5.))  # 黄金角
+    phi = np.pi * (3. - np.sqrt(5.))  # 
     
     for i in range(samples):
-        y = 1 - (i / float(samples - 1)) * 2  # y从1到-1
-        radius_at_y = np.sqrt(1 - y * y)     # 当前y处的圆半径
+        y = 1 - (i / float(samples - 1)) * 2  # y1-1
+        radius_at_y = np.sqrt(1 - y * y)     # y
         
-        theta = phi * i  # 旋转角度
+        theta = phi * i  # 
         
         x = np.cos(theta) * radius_at_y
         z = np.sin(theta) * radius_at_y
         
-        # 缩放到指定半径并平移到中心
         points.append(center + np.array([x, y, z]) * radius)
     
     return np.array(points)
 
 if __name__=="__main__":
-    add_cameras("/media/allen/新加卷/CityGaussian/data/geometry_gt/jinguilou_post/lidar.ply")
+    add_cameras("/media/allen//CityGaussian/data/geometry_gt/jinguilou_post/lidar.ply")

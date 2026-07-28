@@ -20,7 +20,7 @@ class GS2DMeshingUtils:
         weightmaps=[]
 
         for i, viewpoint_cam in tqdm(enumerate(cameras), total=len(cameras), desc="Rendering RGB and depth maps"):
-            render_pkg = renderer(viewpoint_cam, model, bg_color)#渲染场景
+            render_pkg = renderer(viewpoint_cam, model, bg_color)#
             rgb = render_pkg['render']
             # alpha = render_pkg['rend_alpha']
             # normal = torch.nn.functional.normalize(render_pkg['rend_normal'], dim=0)
@@ -44,7 +44,6 @@ class GS2DMeshingUtils:
         """
         torch.cuda.empty_cache()
         c2ws = np.array([np.linalg.inv(np.asarray((cam.world_to_camera.T).cpu().numpy())) for cam in cameras])
-        #摄像机到世界坐标系的转换矩阵
 
         poses = c2ws[:, :3, :] @ np.diag([1, -1, -1, 1])
         center = (cls.focus_point_fn(poses))
@@ -279,8 +278,8 @@ class GS2DMeshingUtils:
     @torch.no_grad()
     def extract_mesh_bounded(
         cls,
-        maps,#深度图、rgb图
-        cameras,#相机信息
+        maps,#rgb
+        cameras,#
         voxel_size=0.004,
         sdf_trunc=0.02,
         depth_trunc=3,
@@ -327,7 +326,7 @@ class GS2DMeshingUtils:
                     depth_scale=1.0
                 )
 
-                volume.integrate(rgbd, intrinsic=cam_o3d.intrinsic, extrinsic=cam_o3d.extrinsic)#调库进行TSDF整合
+                volume.integrate(rgbd, intrinsic=cam_o3d.intrinsic, extrinsic=cam_o3d.extrinsic)#TSDF
 
         mesh = volume.extract_triangle_mesh()
         return mesh

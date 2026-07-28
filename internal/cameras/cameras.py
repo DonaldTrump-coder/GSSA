@@ -6,8 +6,8 @@ from torch import Tensor
 
 
 class CameraType:
-    PERSPECTIVE: int = 0#透视相机
-    FISHEYE: int = 1#鱼眼相机
+    PERSPECTIVE: int = 0#
+    FISHEYE: int = 1#
 
 
 @dataclass
@@ -43,14 +43,14 @@ class Camera:
     camera_center: Tensor
 
     def to_device(self, device):
-        for field in Camera.__dataclass_fields__:#dataclass的内置属性，得到所有字段的名称
-            value = getattr(self, field)#得到每个字段名称对应的值
-            if isinstance(value, torch.Tensor):#如果该值是张量
-                setattr(self, field, value.to(device))#就将该值移动到指定设备去（在指定设备上创建张量）
+        for field in Camera.__dataclass_fields__:#dataclass
+            value = getattr(self, field)#
+            if isinstance(value, torch.Tensor):#
+                setattr(self, field, value.to(device))#
 
         return self
 
-    def get_K(self):#获取内参数矩阵
+    def get_K(self):#
         K = torch.eye(4, dtype=torch.float, device=self.device)
         K[0, 0] = self.fx
         K[1, 1] = self.fy
@@ -64,7 +64,7 @@ class Camera:
 
         # full.transpose() = (K[R T]).transpose() = [R T].transpose() K.transpose()
 
-        return self.world_to_camera @ K.T#@是矩阵乘法，.T是转置
+        return self.world_to_camera @ K.T#@.T
 
     @property
     def device(self):
@@ -72,7 +72,7 @@ class Camera:
 
 
 @dataclass
-class Cameras:#多个摄像机的类
+class Cameras:#
     """
     Y down, Z forward
     world-to-camera
@@ -82,7 +82,7 @@ class Cameras:#多个摄像机的类
     T: Tensor  # [n_cameras, 3]
     fx: Tensor  # [n_cameras]
     fy: Tensor  # [n_cameras]
-    fov_x: Tensor = field(init=False)  # [n_cameras]不进行初始化
+    fov_x: Tensor = field(init=False)  # [n_cameras]
     fov_y: Tensor = field(init=False)  # [n_cameras]
     cx: Tensor  # [n_cameras]
     cy: Tensor  # [n_cameras]
@@ -111,7 +111,7 @@ class Cameras:#多个摄像机的类
     idx: Tensor = None  # [N_cameras]
 
     def _calculate_fov(self):
-        # calculate fov计算视场角
+        # calculate fov
         self.fov_x = 2 * torch.atan((self.width / 2) / self.fx)
         self.fov_y = 2 * torch.atan((self.height / 2) / self.fy)
 
@@ -135,10 +135,10 @@ class Cameras:#多个摄像机的类
         zfar = 100.0
         znear = 0.01
 
-        tanHalfFovY = torch.tan((self.fov_y / 2))#半视场角的正切值
+        tanHalfFovY = torch.tan((self.fov_y / 2))#
         tanHalfFovX = torch.tan((self.fov_x / 2))
 
-        top = tanHalfFovY * znear#计算裁剪面
+        top = tanHalfFovY * znear#
         bottom = -top
         right = tanHalfFovX * znear
         left = -right
@@ -153,11 +153,11 @@ class Cameras:#多个摄像机的类
         P[:, 1, 2] = (top + bottom) / (top - bottom)  # = 0, top + bottom = 0
         P[:, 3, 2] = z_sign
         P[:, 2, 2] = z_sign * zfar / (zfar - znear)
-        P[:, 2, 3] = -(zfar * znear) / (zfar - znear)#得到NDC投影矩阵
+        P[:, 2, 3] = -(zfar * znear) / (zfar - znear)#NDC
 
-        self.projection = torch.transpose(P, 1, 2)#转置
+        self.projection = torch.transpose(P, 1, 2)#
 
-        self.full_projection = self.world_to_camera.bmm(self.projection)#批量矩阵乘法，得到的矩阵能直接将世界坐标系下的点转换至NDC空间
+        self.full_projection = self.world_to_camera.bmm(self.projection)#NDC
 
     def _calculate_camera_center(self):
         self.camera_center = torch.linalg.inv(self.world_to_camera)[:, 3, :3]
@@ -168,7 +168,7 @@ class Cameras:#多个摄像机的类
         self._calculate_ndc_projection_matrix()
         self._calculate_camera_center()
 
-        self.idx = torch.arange(self.R.shape[0], dtype=torch.int32)#索引序列的张量
+        self.idx = torch.arange(self.R.shape[0], dtype=torch.int32)#
 
         if self.time is None:
             self.time = torch.zeros(self.R.shape[0])
@@ -204,4 +204,4 @@ class Cameras:#多个摄像机的类
 
     def __iter__(self):
         for i in range(len(self)):
-            yield self[i]#返回迭代组成的生成器
+            yield self[i]#

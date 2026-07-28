@@ -246,7 +246,7 @@ def main():
         # profiler="simple",
         enable_checkpointing=False,
         use_distributed_sampler=False,
-        log_every_n_steps=min(len(dataparser_outputs.val_set), 10),
+        log_every_n_steps=min(len(dataparser_outputs.val_set), 50),
     )
 
     # setup dataloader

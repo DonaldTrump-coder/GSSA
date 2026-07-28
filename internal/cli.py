@@ -26,7 +26,7 @@ jsonargparse._typehints.discard_init_args_on_class_path_change = discard_init_ar
 
 
 class CLI(LightningCLI):
-    def add_arguments_to_parser(self, parser: LightningArgumentParser) -> None:#添加参数
+    def add_arguments_to_parser(self, parser: LightningArgumentParser) -> None:#
         parser.add_argument("--max_steps", "--iterations", "--iteration", "--steps", "--step", type=Optional[int], default=None)
         parser.add_argument("--max_epochs", "--epochs", "--epoch", type=Optional[int], default=None)
         parser.add_argument("--name", "-n", type=Optional[str], default=None,

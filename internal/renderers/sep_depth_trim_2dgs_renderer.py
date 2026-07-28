@@ -55,7 +55,6 @@ class SepDepthTrim2DGSRenderer(Renderer):
         # Create zero tensor. We will use it to make pytorch return gradients of the 2D (screen-space) means
         screenspace_points = torch.zeros_like(pc.get_xyz, dtype=pc.get_xyz.dtype, requires_grad=True,
                                               device=bg_color.device) + 0
-        #创建与点云相同维度形状的零张量
 
         try:
             screenspace_points.retain_grad()
@@ -65,7 +64,6 @@ class SepDepthTrim2DGSRenderer(Renderer):
         # Set up rasterization configuration
         tanfovx = math.tan(viewpoint_camera.fov_x * 0.5)
         tanfovy = math.tan(viewpoint_camera.fov_y * 0.5)
-        #半视场角的正切值
 
         raster_settings = GaussianRasterizationSettings(
             image_height=int(viewpoint_camera.height),
@@ -92,7 +90,7 @@ class SepDepthTrim2DGSRenderer(Renderer):
         # If precomputed 3d covariance is provided, use it. If not, then it will be computed from
         # scaling / rotation by the rasterizer.
         cov3D_precomp = None
-        scales = pc.get_scaling[..., :2]#只取scale的前两维（表示平面椭圆）
+        scales = pc.get_scaling[..., :2]#scale
         rotations = pc.get_rotation
 
         # If precomputed colors are provided, use them. Otherwise, if it is desired to precompute colors

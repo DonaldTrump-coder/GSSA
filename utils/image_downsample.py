@@ -53,7 +53,8 @@ if __name__ == "__main__":
     assert args.src != args.dst
 
     if args.dst is None:
-        args.dst = "{}_{}".format(args.src, args.factor)
+        factor_str = str(int(args.factor)) if args.factor == int(args.factor) else str(args.factor)
+        args.dst = f"{args.src}_{factor_str}"
 
     image_list = find_images(args.src, args.extensions)
 

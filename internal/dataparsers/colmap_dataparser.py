@@ -81,7 +81,6 @@ class ColmapDataParser(DataParser):
     def _round_half_up(self, i: torch.Tensor):
         return torch.floor(i + 0.5)
 
-    #获取稀疏点云路径
     def detect_sparse_model_dir(self) -> str:
         if os.path.isdir(os.path.join(self.path, "sparse", "0")):
             return os.path.join(self.path, "sparse", "0")
@@ -171,10 +170,10 @@ class ColmapDataParser(DataParser):
 
     def get_outputs(self) -> DataParserOutputs:
         # load colmap sparse model
-        sparse_model_dir = self.detect_sparse_model_dir()#稀疏点云路径
-        cameras = colmap_utils.read_cameras_binary(os.path.join(sparse_model_dir, "cameras.bin"))#相机位姿路径
-        images = colmap_utils.read_images_binary(os.path.join(sparse_model_dir, "images.bin"))#图像路径
-        #读取SfM的数据，包括了相机数据和图像数据
+        sparse_model_dir = self.detect_sparse_model_dir()#
+        cameras = colmap_utils.read_cameras_binary(os.path.join(sparse_model_dir, "cameras.bin"))#
+        images = colmap_utils.read_images_binary(os.path.join(sparse_model_dir, "images.bin"))#
+        #SfM
 
         # sort images
         images = dict(sorted(images.items(), key=lambda item: item[0]))
