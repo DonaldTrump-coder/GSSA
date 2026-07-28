@@ -91,6 +91,22 @@ mkdir utils/Depth-Anything-V2/checkpoints
 wget -O utils/Depth-Anything-V2/checkpoints/depth_anything_v2_vitl.pth "https://huggingface.co/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth?download=true"
 ```
 
+### Data
+Organize your input data as follows:
+```
+data/$SCENE_NAME/
+├── images/          # RGB images
+│   ├── 0001.jpg
+│   ├── 0002.jpg
+│   └── ...
+└── sparse/          # COLMAP sparse reconstruction results
+    └── 0/
+        ├── cameras.bin
+        ├── images.bin
+        └── points3D.bin
+```
+Example data can be found [here](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/datasets/input/tandt_db.zip).
+
 ### Running
 <strong>A. Data Preprocessing</strong>
 
@@ -115,6 +131,9 @@ python utils/gs2d_mesh_extraction.py \
         outputs/$SCENE_NAME \
         --voxel_size $VOXEL_SIZE
 ```
+
+## Acknowledgements
+This project benefits from [2DGS](https://surfsplatting.github.io/), [CityGaussianV2](https://dekuliutesla.github.io/CityGaussianV2/). Thanks for their great work!
 
 ## License
 This project is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Commercial use requires prior consent. See [LICENSE](LICENSE.md) details.
