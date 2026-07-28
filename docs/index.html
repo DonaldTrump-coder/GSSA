@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Fast Overviews Generator for Large Satellite Images using C++.">
-  <meta name="keywords" content="Satellite, Fast-Overview">
+        content="GSSA: Gaussian Surfels with Spatial Awareness for Surface Reconstruction — official project page.">
+  <meta name="keywords" content="Gaussian Splatting, Surface Reconstruction, SDF, Photogrammetry, 3D Reconstruction">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FastViewGener: Fast Overviews Generator for Large Satellite Images</title>
+  <title>GSSA: Gaussian Surfels with Spatial Awareness for Surface Reconstruction</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
@@ -32,7 +32,7 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/remote-sensing-satellite.png">
+  <link rel="icon" href="./static/images/grid.png">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -63,11 +63,14 @@
           More Work
         </a>
         <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://donaldtrump-coder.github.io/china-crop-climatic-suitability/" target="_blank">
+            Crop Suitability
+          </a>
+          <a class="navbar-item" href="https://donaldtrump-coder.github.io/G-LSMEI/" target="_blank">
+            G-LSMEI
+          </a>
           <a class="navbar-item" href="https://donaldtrump-coder.github.io/Informative-Scene-Reconstruction-App/" target="_blank">
             Scene Reconstructor with Guidance Agent
-          </a>
-          <a class="navbar-item" href="https://donaldtrump-coder.github.io/mapswithdrone/" target="_blank">
-            Atlas of LEI
           </a>
         </div>
       </div>
@@ -82,47 +85,46 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title"><img src="static/images/remote-sensing-satellite.png" style="height: 0.7em; vertical-align: middle;"/>FastViewGener: Fast Overviews Generator for Large Satellite Images</h1>
+          <h1 class="title is-1 publication-title"><img src="static/images/grid.png" style="height: 0.8em; vertical-align: middle; position: relative; top: -0.12em;"/>&nbsp;GSSA: Gaussian Surfels with Spatial Awareness for Surface Reconstruction</h1>
           <div class="is-size-5 publication-authors">
-            <strong>Contributor: </strong>
             <span class="author-block">
-              <a href="https://donaldtrump-coder.github.io/" target="_blank">
-                Haojun Tang
-            </a>,
+                <a href="https://donaldtrump-coder.github.io/" target="_blank">Haojun Tang</a><sup>1</sup>,
             </span>
             <span class="author-block">
-              <a href="https://github.com/neil666-com" target="_blank">
-               Yuyang Wu
-            </a>,
+                <a href="https://github.com/zousiyuan3s/" target="_blank">Siyuan Zou</a><sup>1,2</sup>,
             </span>
             <span class="author-block">
-              <a href="https://github.com/Jeiluo" target="_blank">Jiahao Zhou</a>,
+                <a href="https://faculty.csu.edu.cn/panhongbo/zh_CN/index.htm" target="_blank">Hongbo Pan</a><sup>1</sup>,
             </span>
             <span class="author-block">
-              <a href="https://faculty.csu.edu.cn/panhongbo/zh_CN/index.htm" target="_blank">Hongbo Pan</a>
+                Yixin Lu<sup>3</sup>,
             </span>
-          </div>
+            <span class="author-block">
+                Shun Zhou<sup>1</sup>
+            </span>
+            </div>
 
-          <div class="is-size-5 publication-authors">
-            Thanks to <strong>Sponsor: </strong>
-            <span class="author-block">
-                <a href="https://faculty.csu.edu.cn/panhongbo/zh_CN/index.htm" target="_blank">Hongbo Pan</a>
-            </span>
-          </div>
+            <div class="is-size-6 publication-authors" style="font-style: italic;">
+            <span class="author-block"><sup>1</sup>School of Geosciences and Info-Physics, Central South University</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>Key Laboratory of China-ASEAN Satellite Remote Sensing Applications, Ministry of Natural Resources</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>3</sup>Guangxi Beibu Gulf Investment Group Co., Ltd.</span>
+            </div>
+            <br>
 
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-                <a href="https://en.csu.edu.cn/" target="_blank">
-                    Central South University
-                </a>
-            </span>
-          </div>
+            <div id="top" align="center">
+            <a href="https://www.mdpi.com/journal/remotesensing" target="_blank"><img src="https://img.shields.io/badge/Journal-Remote%20Sensing-blue" alt="Journal"></a>
+            <a href="https://github.com/DonaldTrump-coder/SDF-constructor" target="_blank"><img src="https://img.shields.io/badge/Core-SDF--constructor-8A2BE2" alt="Core Engine"></a>
+            <img src="https://img.shields.io/github/stars/DonaldTrump-coder/GSSA" alt="Stars">
+            <img src="https://img.shields.io/github/forks/DonaldTrump-coder/GSSA" alt="Forks">
+            <img src="https://img.shields.io/github/last-commit/DonaldTrump-coder/GSSA" alt="Last Commit">
+            <a href="https://github.com/DonaldTrump-coder/GSSA/blob/main/LICENSE.md" target="_blank"><img src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey" alt="License"></a>
+            </div>
 
           <div class="column has-text-centered">
             <div class="publication-links">
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/DonaldTrump-coder/FastViewGen"
+                <a href="https://github.com/DonaldTrump-coder/GSSA"
                    class="external-link button is-normal is-rounded is-dark" target="_blank">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -132,12 +134,12 @@
               </span>
               <!-- Dataset Link. -->
               <span class="link-block">
-                <a href="https://www.modelscope.cn/datasets/Donald123456/LargeSatelliteImgs"
+                <a href="./static/paper.pdf"
                    class="external-link button is-normal is-rounded is-dark" target="_blank">
                   <span class="icon">
-                      <img src="static/images/server.png" alt="Icon" style="width: 80%; filter: invert(1);">
+                      <i class="far fa-file-pdf"></i>
                   </span>
-                  <span>Data</span>
+                  <span>Paper</span>
                   </a>
                 </span>
             </div>
@@ -152,164 +154,169 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
-        <h2 class="title is-3">Results</h2>
-    </div>
-    <div class="column is-full-width">
-        <h3 class="title is-4">Fast Overview Results</h3>
-    </div>
-    <br>
-    <div class="container is-max-desktop">
-    <table style="table-layout: fixed;" id="Result1">
-    <thead>
-        <tr>
-        <th verticalalign="middle" align="center" style="width: 15%;" >Stretch Methods</th>
-        <th valign="middle" align="center" style="width: 14%">Linear</th>
-        <th valign="middle" align="center" style="width: 14%">Log</th>
-        <th valign="middle" align="center" style="width: 14%">Gamma</th>
-        <th valign="middle" align="center" style="width: 14%">Tile Stretch</th>
-        <th valign="middle" align="center" style="width: 14%">Piecewise Equal</th>
-        <th valign="middle" align="center" style="width: 14%">Histogram Equal</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        <td valign="middle" align="center">Sat1</td>
-        <td valign="middle" align="center"><img src="static/images/Sat1_linear.png" width="98%"></td>
-        <td valign="middle" align="center" ><img src="static/images/Sat1_log.png" width="98%"></td>
-        <td valign="middle" align="center"><img src="static/images/Sat1_gamma.png" width="98%"></td>
-        <td valign="middle" align="center"><img src="static/images/Sat1_tile_stretch.png" width="98%"></td>
-        <td valign="middle" align="center"><img src="static/images/Sat1_piecewise_equal.png" width="98%"></td>
-        <td valign="middle" align="center"><img src="static/images/Sat1_histo_equal.png" width="98%"></td>
-        </tr>
-        <tr>
-        <td align="center">Sat2</td>
-        <td align="center"><img src="static/images/Sat2_linear.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat2_log.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat2_gamma.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat2_tile_stretch.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat2_piecewise_equal.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat2_histo_equal.png" width="98%"></td>
-        </tr>
-        <tr>
-        <td align="center">Sat3</td>
-        <td align="center"><img src="static/images/Sat3_linear.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat3_log.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat3_gamma.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat3_tile_stretch.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat3_piecewise_equal.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat3_histo_equal.png" width="98%"></td>
-        </tr>
-        <tr>
-        <td align="center">Sat4</td>
-        <td align="center"><img src="static/images/Sat4_linear.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat4_log.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat4_gamma.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat4_tile_stretch.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat4_piecewise_equal.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat4_histo_equal.png" width="98%"></td>
-        </tr>
-        <tr>
-        <td align="center">Sat5</td>
-        <td align="center"><img src="static/images/Sat5_linear.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat5_log.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat5_gamma.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat5_tile_stretch.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat5_piecewise_equal.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat5_histo_equal.png" width="98%"></td>
-        </tr>
-        <tr>
-        <td align="center">Sat7</td>
-        <td align="center"><img src="static/images/Sat7_linear.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat7_log.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat7_gamma.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat7_tile_stretch.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat7_piecewise_equal.png" width="98%"></td>
-        <td align="center"><img src="static/images/Sat7_histo_equal.png" width="98%"></td>
-        </tr>
-    </tbody>
-    </table>
-    </div>
-    <br><br>
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">TSDF &nbsp; VS &nbsp; Ours</h2>
+        <div class="content has-text-justified">
+          <figure style="width: 100%; margin: 0;">
+            <div style="position: relative; width: 100%; height: 400px; display: grid;">
+              <div class="img-comp-wrapper" data-pair="0" style="grid-area: 1/1; position: relative; height: 400px; line-height: 0; justify-self: center;">
+                <img src="static/images/drjohnson/carpet-ours.png" style="height: 100%; width: auto;" alt="Ours">
+                <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 14px; line-height: 1.5;">Ours</div>
+                <div class="img-comp-overlay" style="position: absolute; top: 0; left: 0; height: 100%; clip-path: inset(0 50% 0 0);">
+                  <img src="static/images/drjohnson/carpet-tsdf.png" style="height: 100%; width: auto; display: block;" alt="TSDF">
+                  <div style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.6); color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 14px; line-height: 1.5;">TSDF</div>
+                </div>
+                <div class="img-comp-slider" style="position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: #fff; cursor: ew-resize; border-radius: 2px; transform: translateX(-50%);">
+                  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 40px; height: 40px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
+                    ⟷
+                  </div>
+                </div>
+              </div>
 
-    <div class="column is-full-width">
-        <h3 class="title is-4">Cropping Results</h3>
+              <!-- More pairs hidden by default -->
+              <div class="img-comp-wrapper" data-pair="1" style="display: none; grid-area: 1/1; position: relative; height: 400px; line-height: 0; justify-self: center;">
+                <img src="static/images/jinguilou/ours-mesh_2.PNG" style="height: 100%; width: auto;" alt="Ours">
+                <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 14px; line-height: 1.5;">Ours</div>
+                <div class="img-comp-overlay" style="position: absolute; top: 0; left: 0; height: 100%; clip-path: inset(0 50% 0 0);">
+                  <img src="static/images/jinguilou/tsdf_2.PNG" style="height: 100%; width: auto; display: block;" alt="TSDF">
+                  <div style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.6); color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 14px; line-height: 1.5;">TSDF</div>
+                </div>
+                <div class="img-comp-slider" style="position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: #fff; cursor: ew-resize; border-radius: 2px; transform: translateX(-50%);">
+                  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 40px; height: 40px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
+                    ⟷
+                  </div>
+                </div>
+              </div>
+
+              <div class="img-comp-wrapper" data-pair="2" style="display: none; grid-area: 1/1; position: relative; height: 400px; line-height: 0; justify-self: center;">
+                <img src="static/images/scan1/ours.png" style="height: 100%; width: auto;" alt="Ours">
+                <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 14px; line-height: 1.5;">Ours</div>
+                <div class="img-comp-overlay" style="position: absolute; top: 0; left: 0; height: 100%; clip-path: inset(0 50% 0 0);">
+                  <img src="static/images/scan1/tsdf.png" style="height: 100%; width: auto; display: block;" alt="TSDF">
+                  <div style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.6); color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 14px; line-height: 1.5;">TSDF</div>
+                </div>
+                <div class="img-comp-slider" style="position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: #fff; cursor: ew-resize; border-radius: 2px; transform: translateX(-50%);">
+                  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 40px; height: 40px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
+                    ⟷
+                  </div>
+                </div>
+              </div>
+
+              <!-- Navigation arrows -->
+              <button class="comp-prev" style="position: absolute; left: -55px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; background: #333; color: #fff; border: none; border-radius: 50%; cursor: pointer; font-size: 20px; z-index: 10; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-left"></i></button>
+              <button class="comp-next" style="position: absolute; right: -55px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; background: #333; color: #fff; border: none; border-radius: 50%; cursor: pointer; font-size: 20px; z-index: 10; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button>
+            </div>
+          </figure>
+        </div>
+      </div>
     </div>
-    <br>
-    <div class="container is-max-desktop">
-    <table style="table-layout: fixed;" id="Result2">
-    <thead>
-        <tr>
-        <th verticalalign="middle" align="center" style="width: 14%;" >Sat1</th>
-        <th valign="middle" align="center" style="width: 14%">Sat2</th>
-        <th valign="middle" align="center" style="width: 14%">Sat3</th>
-        <th valign="middle" align="center" style="width: 14%">Sat4</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        <td valign="middle" align="center"><img src="static/images/Sat1_cropping.png" width="98%"></td>
-        <td valign="middle" align="center" ><img src="static/images/Sat2_cropping.png" width="98%"></td>
-        <td valign="middle" align="center"><img src="static/images/Sat3_cropping.png" width="98%"></td>
-        <td valign="middle" align="center"><img src="static/images/Sat4_cropping.png" width="98%"></td>
-        </tr>
-    </tbody>
-    </table>
-    </div><br><br>
-
-    <div class="column is-full-width">
-        <h3 class="title is-4">Partitioning Results</h3>
-    </div>
-    <br>
-    <div class="container is-max-desktop">
-    <table style="table-layout: fixed;" id="Result2">
-    <thead>
-        <tr>
-        <th verticalalign="middle" align="center" style="width: 14%;" >Sat1</th>
-        <th valign="middle" align="center" style="width: 14%">Sat2</th>
-        <th valign="middle" align="center" style="width: 14%">Sat4</th>
-        <th valign="middle" align="center" style="width: 14%">Sat5</th>
-        <th valign="middle" align="center" style="width: 14%">Sat7</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        <td valign="middle" align="center"><img src="static/images/Sat1_partitioner.png" width="98%"></td>
-        <td valign="middle" align="center" ><img src="static/images/Sat2_partitioner.png" width="98%"></td>
-        <td valign="middle" align="center"><img src="static/images/Sat4_partitioner.png" width="98%"></td>
-        <td valign="middle" align="center"><img src="static/images/Sat5_partitioner.png" width="98%"></td>
-        <td valign="middle" align="center"><img src="static/images/Sat7_partitioner.png" width="98%"></td>
-        </tr>
-    </tbody>
-    </table>
-
-
   </div>
 </section>
 
 <script>
-  window.onload = function() {
-    var rows = document.querySelectorAll('#Result1 tbody tr');
+(function() {
+  var wrappers = document.querySelectorAll('.img-comp-wrapper');
+  var currentPair = 0;
+  var transitioning = false;
 
-    rows.forEach(function(row) {
-      var images = row.querySelectorAll('img');
-      var maxHeight = 0;
+  // Init: set all to grid cell overlap, transition on opacity
+  wrappers.forEach(function(w) {
+    w.style.gridArea = '1 / 1';
+    w.style.justifySelf = 'center';
+    w.style.transition = 'opacity 0.4s ease';
+    w.style.opacity = '0';
+    w.style.pointerEvents = 'none';
+  });
+  // Show first
+  wrappers[0].style.opacity = '1';
+  wrappers[0].style.pointerEvents = 'auto';
 
-      images.forEach(function(img) {
-        if (img.height > maxHeight) {
-          maxHeight = img.height;
-        }
-      });
+  function showPair(idx) {
+    if (idx === currentPair || transitioning) return;
+    transitioning = true;
+    var prev = wrappers[currentPair];
+    var next = wrappers[idx];
+    prev.style.opacity = '0';
+    prev.style.pointerEvents = 'none';
+    next.style.display = 'block';  // ensure visible for transition
+    next.style.opacity = '1';
+    next.style.pointerEvents = 'auto';
+    currentPair = idx;
+    setTimeout(function() { transitioning = false; }, 400);
+  }
 
-      row.style.lineHeight = maxHeight + 'px';
-
-      images.forEach(function(img) {
-        img.style.verticalAlign = 'middle';
-      });
+  document.querySelectorAll('.comp-prev').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      showPair((currentPair - 1 + wrappers.length) % wrappers.length);
     });
-  };
+  });
+  document.querySelectorAll('.comp-next').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      showPair((currentPair + 1) % wrappers.length);
+    });
+  });
+
+  wrappers.forEach(function(container) {
+    var slider = container.querySelector('.img-comp-slider');
+    var overlay = container.querySelector('.img-comp-overlay');
+    var dragging = false;
+
+    function update(pct) {
+      overlay.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+      slider.style.left = pct + '%';
+    }
+
+    slider.addEventListener('mousedown', function(e) { dragging = true; e.preventDefault(); });
+    window.addEventListener('mouseup', function() { dragging = false; });
+    window.addEventListener('mousemove', function(e) {
+      if (!dragging) return;
+      var rect = container.getBoundingClientRect();
+      var pct = Math.max(0, Math.min((e.clientX - rect.left) / rect.width * 100, 100));
+      update(pct);
+    });
+
+    slider.addEventListener('touchstart', function(e) { dragging = true; });
+    window.addEventListener('touchend', function() { dragging = false; });
+    window.addEventListener('touchmove', function(e) {
+      if (!dragging) return;
+      var rect = container.getBoundingClientRect();
+      var pct = Math.max(0, Math.min((e.touches[0].clientX - rect.left) / rect.width * 100, 100));
+      update(pct);
+    });
+  });
+})();
 </script>
 
+<section class="hero teaser" style="margin-top: 3rem;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <figure style="width: 95%; margin: 0; margin: 0 auto;">
+            <img src="static/images/teaser.png" alt="GSSA Pipeline" style="width: 100%; vertical-align: middle;">
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            3D Gaussian Splatting is effective in multi-view surface reconstruction tasks, fundamental to photogrammetry applications. Mainstream pipelines focus on optimizing for explicit Gaussians to enhance volumetric rendering quality, typically relying on rendering-based Truncated Signed Distance Function (TSDF) methods for reconstruction, while the training and meshing often suffer from missing details and geometric distortions under occlusions or restricted viewpoints. In this paper, we focus on a new problem definition: directly formulating implicit surface representation exploiting geometric features of trained Gaussian Surfels. For this problem, we introduce <strong>G</strong>aussian <strong>S</strong>urfels with <strong>S</strong>patial <strong>A</strong>wareness (GSSA) for reconstruction, a spatially aware reconstruction framework that optimizes for Surfel distributions from geometric primitives via a 3D refiner, and constructs SDF by integrating signed distances from voxel vertices to nearby Surfels. Compared with state-of-the-art GS-based, especially Surfel-based, reconstruction methods, GSSA achieves both competitive geometric accuracy and efficiency. On terrestrial (indoor object) and airborne (photogrammetry) reconstruction benchmarks, GSSA maintains a competitive balance between reconstruction time and accuracy. Further migration experiments demonstrate that GSSA can also be integrated as a plug-and-play module into general Surfel-based pipelines.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="margin-top: -2rem;">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
@@ -317,30 +324,133 @@
         <div class="content has-text-justified">
           <p>
             <figure>
-            <img src="static/images/Overview.png" alt="Overview" style="width: 100%;">
-            <figcaption>Over view of our Pipeline.</figcaption>
+            <img src="static/images/Pipeline.png" alt="Overview" style="width: 100%;">
+            <figcaption>Overview of GSSA.</figcaption>
             </figure>
-            The third-party libraries used in this project are: <a href="https://github.com/DonaldTrump-coder/libtiff" target="_blank">libtiff</a>, <a href="https://github.com/nothings/stb" target="_blank">stb</a>, <a href="https://github.com/jbeder/yaml-cpp", target="_blank">yaml-cpp</a>.<br>
           </p>
-            <figure>
-            <img src="static/images/Classes.png" alt="Classes" style="width: 30%;">
-            <figcaption>Structure of Classes used in this project.</figcaption>
-            </figure>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="BibTeX">
+<section class="section" style="margin-top: -4rem;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified">
+            <h3 class="title is-4" style="text-align: left;">Qualitative Comparison</h3>
+            <div style="overflow-x: auto;">
+            <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; margin-bottom: 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px;">
+<div style="flex: 0 0 15%; text-align: left; font-weight: bold; font-size: 0.85rem;"></div>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; margin-bottom: 4px;"><div style="flex: 0 0 15%; text-align: left; padding-right: 8px;" style="vertical-align: middle; font-size: 0.85rem;">(a) Image Regions</div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/uav/img1.png" alt=""></div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/uav/img2.png" alt=""></div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/uav/img3.png" alt=""></div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/uav/img4.png" alt=""></div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/blended/img1.png" alt=""></div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/blended/img2.png" alt=""></div></div>
+<div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; margin-bottom: 4px;"><div style="flex: 0 0 15%; text-align: left; padding-right: 8px;" style="vertical-align: middle; font-size: 0.85rem;">(b) TSDF</div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/uav/tsdf1.png" alt=""></div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/uav/tsdf2.png" alt=""></div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/uav/tsdf3.png" alt=""></div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/uav/tsdf4.png" alt=""></div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/blended/tsdf1.png" alt=""></div><div style="height: 110px; vertical-align: middle;"><img style="height: 100px; width: auto;  vertical-align: middle;" src="static/images/results/blended/tsdf2.png" alt=""></div></div>
+<div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; margin-bottom: 4px;"><div style="flex: 0 0 15%; text-align: left; padding-right: 8px;" style="vertical-align: middle; font-size: 0.85rem;">(c) Poisson</div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/poisson1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/poisson2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/poisson3.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/poisson4.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/poisson1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/poisson2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div></div>
+<div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; margin-bottom: 4px;"><div style="flex: 0 0 15%; text-align: left; padding-right: 8px;" style="vertical-align: middle; font-size: 0.85rem;">(d) &alpha;-Shape</div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/alpha1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/alpha2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/alpha3.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/alpha4.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/alpha1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/alpha2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div></div>
+<div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; margin-bottom: 4px;"><div style="flex: 0 0 15%; text-align: left; padding-right: 8px;" style="vertical-align: middle; font-size: 0.85rem;">(e) GOF</div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/gof1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/gof2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/gof3.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/gof4.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/gof1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/gof2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div></div>
+<div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; margin-bottom: 4px;"><div style="flex: 0 0 15%; text-align: left; padding-right: 8px;" style="vertical-align: middle; font-size: 0.85rem;">(g) NeuS</div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/neus1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/neus2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/neus3.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/neus4.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/neus1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/neus2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div></div>
+<div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; margin-bottom: 4px;"><div style="flex: 0 0 15%; text-align: left; padding-right: 8px;" style="vertical-align: middle; font-size: 0.85rem;">(h) Ours</div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/ours1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/ours2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/ours3.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/ours4.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/ours1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/ours2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div></div>
+<div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; margin-bottom: 4px;"><div style="flex: 0 0 15%; text-align: left; padding-right: 8px;" style="vertical-align: middle; font-size: 0.85rem;">(i) Ours (color)</div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/color1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/colors2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/colors3.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/colors4.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/colors1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/colors2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div></div>
+<div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; margin-bottom: 4px;"><div style="flex: 0 0 15%; text-align: left; padding-right: 8px;" style="vertical-align: middle; font-size: 0.85rem;">(j) Ground Truth</div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/gt1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/gt2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/gt3.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/uav/gt4.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/gt1.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div><div style="height: 110px; vertical-align: middle;"><img src="static/images/results/blended/gt2.png" style="height: 100px; width: auto;  vertical-align: middle;" alt=""></div></div>
+
+            </div>
+            <figcaption style="text-align: center;">Qualitative comparison between GSSA and baselines on UAV and BlendedMVS datasets. Yellow boxes highlight detail regions.</figcaption>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </section>
+
+  <section class="section" style="margin-top: -2rem;">
+  <div class="container is-max-desktop">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h3 class="title is-4" style="text-align: left;">Quantitative Comparison</h3>
+      <div class="content has-text-justified">
+
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 1.5rem;">
+            <caption style="caption-side: bottom; font-size: 0.9rem; margin-top: 0.5rem;">Quantitative accuracy evaluation on UAV dataset.</caption>
+            <thead>
+              <tr style="border-bottom: 2px solid #333;">
+                <th style="text-align: left; padding: 6px 8px; width: 12%;">Method</th>
+                <th style="padding: 6px 8px;">Precision (%) &uarr;</th>
+                <th style="padding: 6px 8px;">Recall (%) &uarr;</th>
+                <th style="padding: 6px 8px;">F1 Score (%) &uarr;</th>
+                <th style="padding: 6px 8px;">Chamfer &darr;</th>
+                <th style="padding: 6px 8px;">Mean Normal (&deg;) &darr;</th>
+                <th style="padding: 6px 8px;">Hausdorff &darr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="text-align: left; padding: 4px 8px;">TSDF</td><td>91.6</td><td><b>92.8</b></td><td>92.2</td><td>0.0189</td><td>48.1</td><td>0.3274</td></tr>
+              <tr style="background: #f8f8f8;"><td style="text-align: left; padding: 4px 8px;">Poisson</td><td>80.4</td><td>91.8</td><td>85.7</td><td>0.0198</td><td>39.6</td><td>0.3269</td></tr>
+              <tr><td style="text-align: left; padding: 4px 8px;">&alpha;-Shape</td><td>87.1</td><td>83.9</td><td>85.5</td><td>0.0180</td><td>48.5</td><td>0.3251</td></tr>
+              <tr style="background: #f8f8f8;"><td style="text-align: left; padding: 4px 8px;">GOF</td><td>81.0</td><td>89.8</td><td>85.1</td><td>0.0199</td><td>48.8</td><td>0.3272</td></tr>
+              <tr><td style="text-align: left; padding: 4px 8px;">NeuS</td><td>81.7</td><td>77.6</td><td>79.6</td><td>0.0202</td><td>43.0</td><td>0.3149</td></tr>
+              <tr style="background: #f0f7ff;"><td style="text-align: left; padding: 4px 8px;">Ours</td><td><b>93.4</b></td><td><b>92.8</b></td><td><b>93.1</b></td><td><b>0.0179</b></td><td><b>34.8</b></td><td><b>0.3105</b></td></tr>
+            </tbody>
+          </table>
+
+          <table style="width: 100%; border-collapse: collapse; text-align: center;">
+            <caption style="caption-side: bottom; font-size: 0.9rem; margin-top: 0.5rem;">Quantitative accuracy evaluation on BlendedMVS dataset.</caption>
+            <thead>
+              <tr style="border-bottom: 2px solid #333;">
+                <th style="text-align: left; padding: 6px 8px; width: 12%;">Method</th>
+                <th style="padding: 6px 8px;">Precision (%) &uarr;</th>
+                <th style="padding: 6px 8px;">Recall (%) &uarr;</th>
+                <th style="padding: 6px 8px;">F1 Score (%) &uarr;</th>
+                <th style="padding: 6px 8px;">Chamfer &darr;</th>
+                <th style="padding: 6px 8px;">Mean Normal (&deg;) &darr;</th>
+                <th style="padding: 6px 8px;">Hausdorff &darr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="text-align: left; padding: 4px 8px;">TSDF</td><td>34.4</td><td>75.6</td><td>47.3</td><td>0.0057</td><td>53.4</td><td>0.4983</td></tr>
+              <tr style="background: #f8f8f8;"><td style="text-align: left; padding: 4px 8px;">Poisson</td><td>49.9</td><td><b>82.4</b></td><td>62.2</td><td>0.0051</td><td>49.4</td><td>0.7649</td></tr>
+              <tr><td style="text-align: left; padding: 4px 8px;">&alpha;-Shape</td><td>93.6</td><td>68.1</td><td>78.8</td><td>0.0011</td><td>50.8</td><td>0.2435</td></tr>
+              <tr style="background: #f8f8f8;"><td style="text-align: left; padding: 4px 8px;">GOF</td><td><b>95.1</b></td><td>68.6</td><td>79.7</td><td><b>0.0008</b></td><td><b>43.2</b></td><td>0.1694</td></tr>
+              <tr><td style="text-align: left; padding: 4px 8px;">NeuS</td><td>71.9</td><td>70.1</td><td>71.0</td><td>0.0018</td><td>46.0</td><td>0.2104</td></tr>
+              <tr style="background: #f0f7ff;"><td style="text-align: left; padding: 4px 8px;">Ours</td><td>88.6</td><td>77.2</td><td><b>82.5</b></td><td>0.0010</td><td>47.3</td><td><b>0.1683</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </section>
+
+<section class="section" id="License" style="margin-top: -2rem;">
+  <div class="container is-max-desktop content has-text-centered">
+    <h2 class="title">Acknowledgements</h2>
+    <p>
+      This project benefits from <a href="https://surfsplatting.github.io/" target="_blank">2DGS</a>, <a href="https://dekuliutesla.github.io/CityGaussianV2/" target="_blank">CityGaussianV2</a>. Thanks for their great work!
+    </p>
+  </div>
+</section>
+
+<section class="section" id="License" style="margin-top: -2rem;">
+  <div class="container is-max-desktop content has-text-centered">
+    <h2 class="title">License</h2>
+    <p>
+      This project is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>. Commercial use requires prior consent. See <a href="https://github.com/DonaldTrump-coder/GSSA/blob/main/LICENSE.md" target="_blank">LICENSE</a> details.
+    </p>
+  </div>
+</section>
+
+  <section class="section" id="BibTeX" style="margin-top: -2rem;">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@misc{tang2026fastviewgener,
-  author    = {Tang, Haojun and Wu, Yuyang and Zhou, Jiahao and Pan, Hongbo},
-  title     = {FastViewGener: Fast Overviews Generator for Large Satellite Images},
-  year      = {2026},
-  howpublished = {\url{https://github.com/DonaldTrump-coder/FastViewGen}},
-  note = {GitHub repository}
+    If you find our work helpful, please cite:
+    <pre><code>@article{tang2026gssa,
+    title = {GSSA: Gaussian Surfels with Spatial Awareness for Surface Reconstruction},
+    author = {Tang, Haojun and Zou, Siyuan and Pan, Hongbo and Lu, Yixin and Zhou, Shun},
+    journal = {Remote Sensing},
+    year = {2026}
 }</code></pre>
   </div>
 </section>
@@ -361,7 +471,7 @@
             Commons Attribution-ShareAlike 4.0 International License</a>.
           </p>
           <p>
-            Please contact <a href="https://donaldtrump-coder.github.io/" target="_blank">Haojun Tang</a>/<a href="https://github.com/neil666-com" target="_blank">Yuyang Wu</a> for feedback or questions.
+            Please contact <a href="https://donaldtrump-coder.github.io/" target="_blank">Haojun Tang</a> for feedback or questions.
           </p>
         </div>
       </div>
