@@ -38,6 +38,7 @@ This repo is the official implementation of <strong>GSSA: Gaussian Surfels with 
 
 ## News
 <ul>
+  <li><strong>[2026.08]</strong> Paper is <a href="https://www.mdpi.com/2072-4292/18/15/2497">published</a>!</li>
   <li><strong>[2026.07]</strong> Code and <a href="https://donaldtrump-coder.github.io/GSSA/">Project Page</a> released!</li>
   <li><strong>[2026.07]</strong> Our core rasterization & TSDF engine released at <a href="https://github.com/DonaldTrump-coder/SDF-constructor">SDF-constructor</a>!</li>
   <li><strong>[2026.07]</strong> Paper accepted at <em>Remote Sensing</em>!</li>
